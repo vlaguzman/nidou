@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand palette */
+  --color-cream: #f9f6f0;
+  --color-navy: #2e363d;
+  --color-sage: #8fa38b;
+  --color-terracotta: #c36648;
+
+  /* Text-safe variants (>= 4.5:1 on cream/card/muted). Brand colors above stay
+     for backgrounds and decoration; use these whenever the color is text. */
+  --color-sage-text: #587055;
+  --color-terracotta-text: #a8482b;
+
+  /* Semantic colors */
+  --color-background: var(--color-cream);
+  --color-foreground: var(--color-navy);
+  --color-card: #fffdf9;
+  --color-primary: var(--color-navy);
+  --color-primary-foreground: var(--color-cream);
+  --color-secondary: var(--color-sage);
+  --color-secondary-foreground: var(--color-navy);
+  --color-secondary-text: var(--color-sage-text);
+  --color-accent: var(--color-terracotta);
+  --color-accent-foreground: var(--color-cream);
+  --color-accent-text: var(--color-terracotta-text);
+  --color-muted: #efeae0;
+  --color-muted-foreground: #5c625b;
+  --color-border: #e4ddd0;
+
+  /* Fonts (loaded in layout.tsx with next/font) */
+  --font-heading: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+
+  /* Radius scale (rounded-2xl / rounded-3xl are used by cards and tiles) */
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 1.95rem;
+
+  /* Slow, gentle drift for hero photography */
+  --animate-slow-pan: slow-pan 22s ease-in-out infinite alternate;
+  @keyframes slow-pan {
+    0% {
+      transform: scale(1.06) translate3d(0, 0, 0);
+    }
+    100% {
+      transform: scale(1.12) translate3d(0, -1.5%, 0);
+    }
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    background-color: var(--color-background);
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Scroll reveal (see Reveal.tsx) */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Enso brush-stroke draw-in (see Enso.tsx) */
+@keyframes enso-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes enso-dot {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.enso-stroke {
+  stroke-dasharray: 760;
+  stroke-dashoffset: 760;
+  animation: enso-draw 1.8s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+}
+.enso-dot {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: enso-dot 0.6s ease-out 1.6s forwards;
+}
+
+/* Emotional chart draw-in (see EmotionalChart.tsx). The path uses pathLength="1",
+   so a dash of 1 always spans the whole line. */
+.chart-line {
+  stroke-dasharray: 1;
+  transition: stroke-dashoffset 2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.chart-fill {
+  transition: opacity 1.2s ease 0.6s;
+}
+.chart-dot {
+  transition: opacity 0.5s ease 1.8s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .enso-stroke {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+  .enso-dot {
+    opacity: 1;
+    animation: none;
+  }
+  .chart-line,
+  .chart-fill,
+  .chart-dot {
+    transition: none;
+  }
+}
