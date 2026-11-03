@@ -6,7 +6,13 @@ import { Reveal } from "./Reveal";
 let trigger: (isIntersecting: boolean) => void;
 const disconnect = vi.fn();
 
+const stubTop = (top: number) =>
+  vi
+    .spyOn(HTMLElement.prototype, "getBoundingClientRect")
+    .mockReturnValue({ top, bottom: top + 100, height: 100 } as DOMRect);
+
 beforeEach(() => {
+  stubTop(5000); // below the fold by default (jsdom would report zeros)
   vi.stubGlobal(
     "IntersectionObserver",
     class {
@@ -19,7 +25,10 @@ beforeEach(() => {
   );
 });
 
-afterEach(() => vi.unstubAllGlobals());
+afterEach(() => {
+  vi.unstubAllGlobals();
+  vi.restoreAllMocks();
+});
 
 describe("Reveal", () => {
   it("starts hidden and becomes visible once intersecting", () => {
@@ -32,6 +41,28 @@ describe("Reveal", () => {
     act(() => trigger(true));
     expect(el).toHaveClass("is-visible");
     expect(disconnect).toHaveBeenCalled();
+  });
+
+  it("does not arm elements already in the viewport on mount (no hide-then-show flash)", () => {
+    stubTop(100);
+    render(<Reveal>arriba</Reveal>);
+    expect(screen.getByText("arriba")).not.toHaveClass("reveal");
+  });
+
+  it("still arms elements below the fold", () => {
+    stubTop(window.innerHeight + 200);
+    render(<Reveal>abajo</Reveal>);
+    expect(screen.getByText("abajo")).toHaveClass("reveal");
+  });
+
+  it("uses a 0.92 viewport-height threshold (just below arms, just above does not)", () => {
+    const edge = window.innerHeight * 0.92;
+    stubTop(edge - 1);
+    render(<Reveal>dentro</Reveal>);
+    expect(screen.getByText("dentro")).not.toHaveClass("reveal");
+    stubTop(edge);
+    render(<Reveal>borde</Reveal>);
+    expect(screen.getByText("borde")).toHaveClass("reveal");
   });
 
   it("applies delay and custom class and tag", () => {

@@ -27,7 +27,7 @@ jobs:
       - run: npm ci
       - run: npm run typecheck
 
-      # Fails when coverage drops below the thresholds in vitest.config.ts.
+      # Fails when coverage drops below the thresholds in vitest.config.mts.
       - run: npm run test:coverage
 
       # Dev uses Turbopack but production builds use webpack, so only a real

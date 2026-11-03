@@ -35,6 +35,18 @@ describe("SiteHeader", () => {
   });
 
   describe("mobile menu", () => {
+    it("keeps an opaque blurred background while open at the top of the page", () => {
+      render(<SiteHeader />);
+      const header = screen.getByRole("banner");
+      expect(header).toHaveClass("bg-transparent");
+      fireEvent.click(screen.getByRole("button", { name: mobileMenu.openLabel }));
+      expect(header).toHaveClass("backdrop-blur-md");
+      expect(header).toHaveClass("bg-background/85");
+      expect(header).not.toHaveClass("bg-transparent");
+      fireEvent.click(screen.getByRole("button", { name: mobileMenu.closeLabel }));
+      expect(header).toHaveClass("bg-transparent");
+    });
+
     it("is closed by default and wired with aria-expanded/aria-controls", () => {
       render(<SiteHeader />);
       const button = screen.getByRole("button", { name: mobileMenu.openLabel });

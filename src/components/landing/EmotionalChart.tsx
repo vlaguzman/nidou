@@ -14,16 +14,20 @@ const gridLines = [0.25, 0.5, 0.75].map(
 
 export function EmotionalChart() {
   const ref = useRef<SVGSVGElement>(null);
+  // The server (and no-JS) markup is the finished chart. The hidden state is
+  // only armed on the client when it can be drawn in again.
+  const [armed, setArmed] = useState(false);
   const [active, setActive] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    if (typeof IntersectionObserver === "undefined" || reducedMotion) {
-      setActive(true);
-      return;
-    }
+    if (typeof IntersectionObserver === "undefined" || reducedMotion) return;
+    // Already in (or above) the viewport on mount: keep the finished chart so it
+    // does not un-draw and redraw. Same threshold as Reveal.
+    if (el.getBoundingClientRect().top < window.innerHeight * 0.92) return;
+    setArmed(true);
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -36,6 +40,8 @@ export function EmotionalChart() {
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
+
+  const hidden = armed && !active;
 
   return (
     <figure className="rounded-3xl border border-border/70 bg-card p-6 shadow-[0_24px_60px_-34px_rgba(46,54,61,0.3)]">
@@ -77,7 +83,7 @@ export function EmotionalChart() {
           d={area}
           fill="url(#emotional-fill)"
           className="chart-fill"
-          opacity={active ? 1 : 0}
+          opacity={hidden ? 0 : 1}
         />
 
         <path
@@ -88,7 +94,7 @@ export function EmotionalChart() {
           strokeLinecap="round"
           className="chart-line"
           pathLength="1"
-          style={{ strokeDashoffset: active ? 0 : 1 }}
+          style={{ strokeDashoffset: hidden ? 1 : 0 }}
         />
 
         <circle
@@ -97,7 +103,7 @@ export function EmotionalChart() {
           r="6"
           fill="var(--color-terracotta)"
           className="chart-dot"
-          opacity={active ? 1 : 0}
+          opacity={hidden ? 0 : 1}
         />
       </svg>
 

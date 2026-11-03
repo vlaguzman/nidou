@@ -25,7 +25,7 @@ Single-page, Spanish-only landing for NIDOU (motherhood community + emotional we
 - Strict TDD: write the failing Vitest test first. `*.test.ts` run in node, `*.test.tsx` in jsdom. Coverage thresholds (lines/statements/functions 80, branches 70) are enforced by `npm run test:coverage`.
 - Do not add UI libraries (shadcn, cva, clsx, tailwind-merge) or abstractions without 3+ uses. CTAs are plain `<a>`/`<button>` with Tailwind classes.
 - Brand sage/terracotta fail WCAG AA as text on cream: use `text-secondary-text`/`text-accent-text` (and `bg-accent-text` behind cream text) for text, keep `secondary`/`accent` for backgrounds and decoration. `globals.test.ts` asserts the ratios.
-- `Reveal` renders visible on the server and only applies the hidden state after mounting on the client (and only when `IntersectionObserver` exists). Never wrap above-the-fold content in it.
+- `Reveal` renders visible on the server and only applies the hidden state after mounting on the client (only when `IntersectionObserver` exists and the element is below the fold; elements already in the viewport are never hidden). `EmotionalChart` follows the same pattern. Never wrap above-the-fold content in it.
 - Respect `prefers-reduced-motion` for every animation (`globals.css` has one reduced-motion block; add new animated classes there).
 - `src/app/globals.css` applies to every route: give custom classes specific names and keep Tailwind utilities for everything else.
 - No dark mode, no ESLint/Prettier.

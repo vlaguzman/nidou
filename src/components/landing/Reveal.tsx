@@ -21,6 +21,9 @@ export function Reveal({ children, className = "", delay = 0, as = "div" }: Reve
   useEffect(() => {
     const el = ref.current;
     if (!el || typeof IntersectionObserver === "undefined") return;
+    // Already in (or above) the viewport on mount: leave it visible so there is
+    // no hide-then-show flash. Only content below the fold is armed.
+    if (el.getBoundingClientRect().top < window.innerHeight * 0.92) return;
     setArmed(true);
     const observer = new IntersectionObserver(
       ([entry]) => {

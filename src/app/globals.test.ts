@@ -37,6 +37,13 @@ describe("globals.css", () => {
     }
   });
 
+  it("only smooth-scrolls when the user has no reduced-motion preference", () => {
+    const block =
+      css.match(/@media \(prefers-reduced-motion: no-preference\)\s*\{([\s\S]*?)\n\}/)?.[1] ?? "";
+    expect(block).toMatch(/scroll-behavior:\s*smooth/);
+    expect(css.replace(block, "")).not.toMatch(/scroll-behavior:\s*smooth/);
+  });
+
   it("keeps every text pair at WCAG AA (>= 4.5:1)", () => {
     const luminance = (hex: string) => {
       const [r, g, b] = [1, 3, 5]
