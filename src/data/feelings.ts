@@ -5,6 +5,8 @@ export type Mood = {
   emoji: string;
   title: string;
   description: string;
+  /** Optional external destination for the "join" button on the back face. */
+  joinHref?: string;
 };
 
 export const moods: Mood[] = [
@@ -13,7 +15,7 @@ export const moods: Mood[] = [
     label: "Agotada",
     tone: "warm",
     emoji: "🧘",
-    title: "Meditación Activa",
+    title: "Presencia compartida",
     description:
       "Un espacio guiado para desconectar del ruido, recuperar energía y volver a ti. Una pausa consciente para recargar cuerpo y mente.",
   },
@@ -22,7 +24,9 @@ export const moods: Mood[] = [
     label: "Sola",
     tone: "warm",
     emoji: "☕",
-    title: "Café sin compromisos",
+    title: "¿Nos tomamos un café?",
+    joinHref:
+      "https://docs.google.com/forms/d/e/1FAIpQLSetgdHB1sEZDFp6GFSCGwF3d9zb43YxrrIwIEHou5MuWzPdWg/viewform?usp=header",
     description:
       "No hay agenda. No hay presión. Solo conversaciones reales con mamás que probablemente sienten lo mismo que tú.",
   },
@@ -31,7 +35,7 @@ export const moods: Mood[] = [
     label: "Saturada",
     tone: "warm",
     emoji: "🎨",
-    title: "Cita con mi artista",
+    title: "Cita con el artista",
     description:
       "Un espacio para explorar tu creatividad, jugar con las manos y despejar la mente mientras haces algo solo para ti.",
   },
@@ -40,7 +44,7 @@ export const moods: Mood[] = [
     label: "Conectada",
     tone: "calm",
     emoji: "✨",
-    // The source design repeated "Cita con mi artista" here; distinct title chosen.
+    // The source repeats "Cita con el artista" here; distinct title chosen.
     title: "Creatividad en comunidad",
     description:
       "Estás en un buen momento para potenciar tu creatividad. Ven a crear, compartir e inspirarte con otras mujeres.",

@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { testimonials } from "@/data/testimonials";
 import { Testimonials } from "./Testimonials";
@@ -13,8 +13,36 @@ describe("Testimonials", () => {
     expect(screen.getAllByRole("article")).toHaveLength(testimonials.items.length);
     for (const item of testimonials.items) {
       expect(screen.getByText(item.quote)).toBeInTheDocument();
-      expect(screen.getByText(item.detail)).toBeInTheDocument();
+      expect(screen.getAllByText(item.detail).length).toBeGreaterThan(0);
     }
     expect(container.querySelector("section#historias")).not.toBeNull();
+  });
+
+  it("offers a toggle only for the collapsible testimonial", () => {
+    render(<Testimonials />);
+    expect(screen.getAllByRole("button")).toHaveLength(1);
+    const toggle = screen.getByRole("button", { name: testimonials.expand.more });
+    expect(toggle).toHaveAttribute("type", "button");
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
+    expect(toggle).toHaveAttribute("aria-controls", screen.getByText(testimonials.items[0].quote).id);
+  });
+
+  it("clamps the collapsible quote and toggles it", () => {
+    render(<Testimonials />);
+    const quote = screen.getByText(testimonials.items[0].quote);
+    expect(quote).toHaveClass("line-clamp-5");
+    fireEvent.click(screen.getByRole("button", { name: testimonials.expand.more }));
+    const toggle = screen.getByRole("button", { name: testimonials.expand.less });
+    expect(toggle).toHaveAttribute("aria-expanded", "true");
+    expect(quote).not.toHaveClass("line-clamp-5");
+    fireEvent.click(toggle);
+    expect(quote).toHaveClass("line-clamp-5");
+    expect(screen.getByRole("button", { name: testimonials.expand.more })).toHaveAttribute("aria-expanded", "false");
+  });
+
+  it("never clamps non-collapsible quotes", () => {
+    render(<Testimonials />);
+    expect(screen.getByText(testimonials.items[1].quote)).not.toHaveClass("line-clamp-5");
+    expect(screen.getByText(testimonials.items[2].quote)).not.toHaveClass("line-clamp-5");
   });
 });

@@ -1,16 +1,13 @@
 import { sectionIds } from "./site";
 
 export const hero = {
-  eyebrow: "Maternidad vivida en comunidad",
   headline: {
-    lead: "La maternidad cambia todo.",
-    accent: "Y es mejor vivirla acompañada.",
+    lead: "La maternidad nos transforma.",
+    accent: "La comunidad nos sostiene.",
   },
-  description:
-    "NIDOU es un espacio donde conectar con madres que viven momentos parecidos al tuyo, compartir experiencias y descubrir cómo evoluciona tu bienestar emocional a lo largo del tiempo.",
   primaryCta: { label: "Únete a la comunidad", href: `#${sectionIds.unete}` },
   secondaryCta: {
-    label: "Descubre cómo funciona",
+    label: "Descubre Nidou.",
     href: `#${sectionIds.comoFunciona}`,
   },
   image: {
