@@ -4,7 +4,7 @@ import { Reveal } from "./Reveal";
 
 export function CommunityIntro() {
   return (
-    <section className="bg-secondary/10 py-24 sm:py-32">
+    <section className="bg-secondary/10 py-16 sm:py-20">
       <div className="mx-auto max-w-3xl px-5 text-center sm:px-8">
         <Reveal>
           <p className="text-balance font-heading text-3xl leading-tight text-foreground sm:text-4xl">

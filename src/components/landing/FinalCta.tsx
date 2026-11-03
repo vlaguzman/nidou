@@ -25,7 +25,7 @@ export function FinalCta() {
   return (
     <section
       id={sectionIds.unete}
-      className="relative overflow-hidden bg-secondary py-28 text-secondary-foreground sm:py-36"
+      className="relative overflow-hidden bg-secondary py-18 text-secondary-foreground sm:py-24"
     >
       <div
         className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 opacity-20 sm:h-96 sm:w-96"

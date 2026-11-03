@@ -4,7 +4,7 @@ import { Reveal } from "./Reveal";
 
 export function HowItWorks() {
   return (
-    <section id={sectionIds.comoFunciona} className="bg-background py-28 sm:py-36">
+    <section id={sectionIds.comoFunciona} className="bg-background py-18 sm:py-24">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <Reveal>
           <h2 className="text-center font-heading text-3xl text-foreground sm:text-4xl">
@@ -15,7 +15,7 @@ export function HowItWorks() {
           </p>
         </Reveal>
 
-        <div className="relative mt-20">
+        <div className="relative mt-14">
           <div className="absolute left-0 right-0 top-6 hidden h-px bg-border lg:block" aria-hidden />
           <ol className="grid gap-12 sm:grid-cols-2 lg:grid-cols-5 lg:gap-6">
             {howItWorks.steps.map((step, i) => (

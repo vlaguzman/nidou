@@ -9,7 +9,7 @@ export function Testimonials() {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
   return (
-    <section id={sectionIds.historias} className="bg-background py-28 sm:py-36">
+    <section id={sectionIds.historias} className="bg-background py-18 sm:py-24">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <Reveal>
           <h2 className="mx-auto max-w-2xl text-balance text-center font-heading text-3xl leading-tight text-foreground sm:text-4xl">
@@ -17,7 +17,7 @@ export function Testimonials() {
           </h2>
         </Reveal>
 
-        <div className="mt-16 grid gap-6 md:grid-cols-3">
+        <div className="mt-10 grid gap-6 md:grid-cols-3">
           {testimonials.items.map((t, i) => {
             const quoteId = `testimonial-quote-${i}`;
             const isOpen = !!expanded[t.name];
