@@ -28,6 +28,16 @@ export function SiteHeader() {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [menuOpen]);
 
+  useEffect(() => {
+    if (typeof window.matchMedia !== "function") return;
+    const mql = window.matchMedia("(min-width: 768px)");
+    const onChange = (e: MediaQueryListEvent) => {
+      if (e.matches) setMenuOpen(false);
+    };
+    mql.addEventListener("change", onChange);
+    return () => mql.removeEventListener("change", onChange);
+  }, []);
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
@@ -39,10 +49,10 @@ export function SiteHeader() {
       <div className="mx-auto flex h-18 max-w-6xl items-center justify-between px-5 py-3 sm:px-8">
         <a href={`#${sectionIds.inicio}`} className="flex items-center" aria-label="NIDOU, inicio">
           <Image
-            src="/nidou-logo.png"
+            src="/nidou-logo.webp"
             alt="NIDOU"
-            width={132}
-            height={42}
+            width={120}
+            height={36}
             priority
             className="h-9 w-auto"
           />

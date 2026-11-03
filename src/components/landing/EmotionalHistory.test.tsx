@@ -33,12 +33,12 @@ describe("EmotionalHistory", () => {
     render(<EmotionalHistory />);
     const top = (date: string) =>
       parseFloat((screen.getByText(date).parentElement as HTMLElement).style.top);
-    expect(top("30 May")).toBeLessThan(top("2 May"));
+    expect(top("30 may")).toBeLessThan(top("2 may"));
   });
 
   it("scales badges down on small screens and centres them on the polyline", () => {
     const { container } = render(<EmotionalHistory />);
-    const badge = screen.getAllByText("2 May")[0].previousElementSibling as HTMLElement;
+    const badge = screen.getAllByText("2 may")[0].previousElementSibling as HTMLElement;
     expect(badge).toHaveClass("h-9", "w-9", "sm:h-14", "sm:w-14");
     const wrapper = badge.parentElement as HTMLElement;
     expect(wrapper).toHaveClass("-translate-y-4.5", "sm:-translate-y-7");

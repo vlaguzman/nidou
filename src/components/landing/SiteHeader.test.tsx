@@ -1,5 +1,5 @@
 import { act, fireEvent, render, screen, within } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { mobileMenu, navLinks } from "@/data/site";
 import { SiteHeader } from "./SiteHeader";
 
@@ -7,6 +7,13 @@ describe("SiteHeader", () => {
   it("links home through the logo", () => {
     render(<SiteHeader />);
     expect(screen.getByRole("link", { name: "NIDOU, inicio" })).toHaveAttribute("href", "#inicio");
+  });
+
+  it("renders the webp logo with dimensions matching its aspect ratio", () => {
+    render(<SiteHeader />);
+    const logo = screen.getByAltText("NIDOU");
+    expect(decodeURIComponent(logo.getAttribute("src") ?? "")).toContain("nidou-logo.webp");
+    expect(Number(logo.getAttribute("width")) / Number(logo.getAttribute("height"))).toBeCloseTo(480 / 145, 1);
   });
 
   it("renders every nav link and the join CTA", () => {
@@ -82,6 +89,67 @@ describe("SiteHeader", () => {
       const button = screen.getByRole("button", { name: mobileMenu.openLabel });
       expect(screen.queryByRole("navigation", { name: mobileMenu.navLabel })).toBeNull();
       expect(button).toHaveFocus();
+    });
+
+    describe("viewport growing past md", () => {
+      type Listener = (e: { matches: boolean }) => void;
+      let listeners: Listener[];
+      let removed: number;
+
+      beforeEach(() => {
+        listeners = [];
+        removed = 0;
+        vi.stubGlobal(
+          "matchMedia",
+          vi.fn().mockImplementation((query: string) => ({
+            matches: false,
+            media: query,
+            addEventListener: (_: string, l: Listener) => listeners.push(l),
+            removeEventListener: (_: string, l: Listener) => {
+              removed += 1;
+              listeners = listeners.filter((x) => x !== l);
+            },
+          })),
+        );
+      });
+
+      afterEach(() => {
+        vi.unstubAllGlobals();
+      });
+
+      it("closes the open menu when the md media query starts matching", () => {
+        render(<SiteHeader />);
+        expect(window.matchMedia).toHaveBeenCalledWith("(min-width: 768px)");
+        fireEvent.click(screen.getByRole("button", { name: mobileMenu.openLabel }));
+        act(() => listeners.forEach((l) => l({ matches: true })));
+        expect(screen.queryByRole("navigation", { name: mobileMenu.navLabel })).toBeNull();
+        expect(screen.getByRole("button", { name: mobileMenu.openLabel })).toHaveAttribute(
+          "aria-expanded",
+          "false",
+        );
+      });
+
+      it("keeps the menu open when the query stops matching", () => {
+        render(<SiteHeader />);
+        fireEvent.click(screen.getByRole("button", { name: mobileMenu.openLabel }));
+        act(() => listeners.forEach((l) => l({ matches: false })));
+        expect(screen.getByRole("navigation", { name: mobileMenu.navLabel })).toBeInTheDocument();
+      });
+
+      it("removes the listener on unmount", () => {
+        const { unmount } = render(<SiteHeader />);
+        unmount();
+        expect(removed).toBeGreaterThan(0);
+        expect(listeners).toHaveLength(0);
+      });
+    });
+
+    it("does not crash when matchMedia is unavailable", () => {
+      vi.stubGlobal("matchMedia", undefined);
+      render(<SiteHeader />);
+      fireEvent.click(screen.getByRole("button", { name: mobileMenu.openLabel }));
+      expect(screen.getByRole("navigation", { name: mobileMenu.navLabel })).toBeInTheDocument();
+      vi.unstubAllGlobals();
     });
 
     it("ignores other keys", () => {

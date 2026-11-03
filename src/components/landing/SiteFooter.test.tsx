@@ -4,6 +4,13 @@ import { footer } from "@/data/site";
 import { SiteFooter } from "./SiteFooter";
 
 describe("SiteFooter", () => {
+  it("renders the webp logo with dimensions matching its aspect ratio", () => {
+    render(<SiteFooter />);
+    const logo = screen.getByAltText("NIDOU");
+    expect(decodeURIComponent(logo.getAttribute("src") ?? "")).toContain("nidou-logo.webp");
+    expect(Number(logo.getAttribute("width")) / Number(logo.getAttribute("height"))).toBeCloseTo(480 / 145, 1);
+  });
+
   it("renders the tagline and every link column", () => {
     render(<SiteFooter />);
     expect(screen.getByText(footer.tagline)).toBeInTheDocument();

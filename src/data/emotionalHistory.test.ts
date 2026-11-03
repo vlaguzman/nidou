@@ -16,6 +16,17 @@ describe("emotionalHistory data", () => {
     }
   });
 
+  it("uses lowercase Spanish month abbreviations for dates", () => {
+    expect(moodTimeline.map((e) => e.date)).toEqual([
+      "2 may",
+      "9 may",
+      "16 may",
+      "23 may",
+      "30 may",
+      "6 jun",
+    ]);
+  });
+
   it("has the quote copy", () => {
     expect(emotionalHistory.quote).toContain("darte cuenta cómo estás");
   });

@@ -10,12 +10,12 @@ export const moodScale = [
 ];
 
 const logged = [
-  { date: "2 May", level: 0 },
-  { date: "9 May", level: 1 },
-  { date: "16 May", level: 2 },
-  { date: "23 May", level: 3 },
-  { date: "30 May", level: 4 },
-  { date: "6 Jun", level: 1 },
+  { date: "2 may", level: 0 },
+  { date: "9 may", level: 1 },
+  { date: "16 may", level: 2 },
+  { date: "23 may", level: 3 },
+  { date: "30 may", level: 4 },
+  { date: "6 jun", level: 1 },
 ];
 
 export const moodTimeline = logged.map(({ date, level }) => ({

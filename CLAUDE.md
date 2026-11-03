@@ -18,7 +18,7 @@ Single-page, Spanish-only landing for NIDOU (motherhood community + emotional we
 - `src/components/landing/` one PascalCase named-export component per section, flat, with its `*.test.tsx` next to it. Page order: SiteHeader, Hero (+FeelingCard), ValuesSection, WellbeingSection (+EmotionalChart), HowItWorks, GallerySection, EmotionalHistory, Testimonials, FinalCta, SiteFooter. Helpers: Reveal (scroll reveal), Enso (logo mark), Eyebrow.
 - `src/data/` ALL copy and content, typed, one module per section, each with a `*.test.ts`. Components must not hardcode copy; section anchors come from `sectionIds` in `src/data/site.ts`.
 - `src/lib/` pure helpers (chart geometry).
-- `public/` static assets (`images/*.webp`, `nidou-logo.png`).
+- `public/` static assets (`images/*.webp`, `nidou-logo.webp`).
 
 ## Conventions
 

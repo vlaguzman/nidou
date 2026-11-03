@@ -11,7 +11,7 @@ export function SiteFooter() {
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-2">
-            <Image src="/nidou-logo.png" alt="NIDOU" width={140} height={44} className="h-10 w-auto" />
+            <Image src="/nidou-logo.webp" alt="NIDOU" width={133} height={40} className="h-10 w-auto" />
             <p className="mt-4 max-w-xs text-pretty leading-relaxed text-muted-foreground">
               {footer.tagline}
             </p>
