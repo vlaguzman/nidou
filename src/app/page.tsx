@@ -1,3 +1,4 @@
+import { CommunityIntro } from "@/components/landing/CommunityIntro";
 import { EmotionalHistory } from "@/components/landing/EmotionalHistory";
 import { FinalCta } from "@/components/landing/FinalCta";
 import { GallerySection } from "@/components/landing/GallerySection";
@@ -15,12 +16,13 @@ export default function Page() {
       <SiteHeader />
       <main>
         <Hero />
+        <CommunityIntro />
+        <Testimonials />
         <ValuesSection />
         <WellbeingSection />
         <HowItWorks />
         <GallerySection />
         <EmotionalHistory />
-        <Testimonials />
         <FinalCta />
       </main>
       <SiteFooter />

@@ -9,7 +9,7 @@ export function WellbeingSection() {
   const [lead, detail] = wellbeing.paragraphs;
 
   return (
-    <section id={sectionIds.bienestar} className="bg-muted/40 py-28 sm:py-36">
+    <section id={sectionIds.bienestar} className="bg-muted/40 py-18 sm:py-24">
       <div className="mx-auto grid max-w-6xl gap-16 px-5 sm:px-8 lg:grid-cols-2 lg:items-center">
         <Reveal className="order-2 lg:order-1">
           <EmotionalChart />

@@ -24,18 +24,10 @@ export function Hero() {
 
       <div className="mx-auto grid w-full max-w-6xl gap-12 px-5 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
         <div className="max-w-xl">
-          <span className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/70 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground backdrop-blur-sm">
-            {hero.eyebrow}
-          </span>
-
-          <h1 className="mt-6 text-balance font-heading text-5xl leading-[1.05] text-foreground sm:text-6xl">
+          <h1 className="text-balance font-heading text-5xl leading-[1.05] text-foreground sm:text-6xl">
             {hero.headline.lead}
             <span className="mt-2 block text-secondary-text">{hero.headline.accent}</span>
           </h1>
-
-          <p className="mt-6 max-w-md text-pretty text-lg leading-relaxed text-foreground/75">
-            {hero.description}
-          </p>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a

@@ -15,7 +15,7 @@ Single-page, Spanish-only landing for NIDOU (motherhood community + emotional we
 ## Structure
 
 - `src/app/` layout, page, global CSS, favicon (`icon.svg`).
-- `src/components/landing/` one PascalCase named-export component per section, flat, with its `*.test.tsx` next to it. Page order: SiteHeader, Hero (+FeelingCard), ValuesSection, WellbeingSection (+EmotionalChart), HowItWorks, GallerySection, EmotionalHistory, Testimonials, FinalCta, SiteFooter. Helpers: Reveal (scroll reveal), Enso (logo mark), Eyebrow.
+- `src/components/landing/` one PascalCase named-export component per section, flat, with its `*.test.tsx` next to it. Page order: SiteHeader, Hero (+FeelingCard), CommunityIntro, Testimonials, ValuesSection, WellbeingSection (+EmotionalChart), HowItWorks, GallerySection, EmotionalHistory, FinalCta, SiteFooter. Helpers: Reveal (scroll reveal), Enso (logo mark), Eyebrow.
 - `src/data/` ALL copy and content, typed, one module per section, each with a `*.test.ts`. Components must not hardcode copy; section anchors come from `sectionIds` in `src/data/site.ts`.
 - `src/lib/` pure helpers (chart geometry).
 - `public/` static assets (`images/*.webp`, `nidou-logo.webp`).
@@ -33,4 +33,4 @@ Single-page, Spanish-only landing for NIDOU (motherhood community + emotional we
 ## Known placeholders
 
 - `FinalCta` email form only flips local state and discards the email; there is no backend yet (the confirmation copy says so honestly).
-- `href="#"` in the footer ("Sobre nosotras", Instagram) and the "Me sumo al siguiente" button in `FeelingCard` have no destination yet.
+- `href="#"` in the footer ("Sobre nosotras", Instagram) has no destination yet. The "Me sumo al siguiente" button in `FeelingCard` only links somewhere for the "Sola" mood (a Google Form, via `joinHref`); the other moods still render a placeholder button with no destination.

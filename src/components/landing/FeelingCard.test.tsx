@@ -29,7 +29,7 @@ describe("FeelingCard", () => {
   it("flips to the suggestion for the chosen mood and flips back", () => {
     const { container } = render(<FeelingCard />);
     fireEvent.click(screen.getByRole("button", { name: "Sola" }));
-    expect(screen.getByRole("heading", { name: "Café sin compromisos" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "¿Nos tomamos un café?" })).toBeInTheDocument();
     expect(screen.getByText(/Para ti · Sola/)).toBeInTheDocument();
     const faces = container.querySelectorAll("[data-face]");
     expect(faces[0]).toHaveAttribute("inert");
@@ -37,6 +37,26 @@ describe("FeelingCard", () => {
 
     fireEvent.click(screen.getByRole("button", { name: /Volver/ }));
     expect(faces[0]).not.toHaveAttribute("inert");
+  });
+
+  it("links the Sola mood to the Google Form in a new tab", () => {
+    render(<FeelingCard />);
+    fireEvent.click(screen.getByRole("button", { name: "Sola" }));
+    const link = screen.getByRole("link", { name: "Me sumo al siguiente" });
+    expect(link).toHaveAttribute("href", moods.find((m) => m.id === "sola")!.joinHref);
+    expect(link).toHaveAttribute(
+      "href",
+      "https://docs.google.com/forms/d/e/1FAIpQLSetgdHB1sEZDFp6GFSCGwF3d9zb43YxrrIwIEHou5MuWzPdWg/viewform?usp=header",
+    );
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link.getAttribute("rel")).toContain("noopener");
+  });
+
+  it("keeps the placeholder button for moods without a join link", () => {
+    render(<FeelingCard />);
+    fireEvent.click(screen.getByRole("button", { name: "Agotada" }));
+    expect(screen.queryByRole("link", { name: "Me sumo al siguiente" })).toBeNull();
+    expect(screen.getByRole("button", { name: "Me sumo al siguiente" })).toBeInTheDocument();
   });
 
   it("styles warm and calm moods differently when selected", () => {
@@ -50,7 +70,7 @@ describe("FeelingCard", () => {
   it("moves focus to the suggestion heading after flipping", () => {
     render(<FeelingCard />);
     fireEvent.click(screen.getByRole("button", { name: "Sola" }));
-    const heading = screen.getByRole("heading", { name: "Café sin compromisos" });
+    const heading = screen.getByRole("heading", { name: "¿Nos tomamos un café?" });
     expect(heading).toHaveAttribute("tabindex", "-1");
     expect(heading).toHaveFocus();
   });

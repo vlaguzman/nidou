@@ -16,14 +16,21 @@ describe("Hero", () => {
   it("renders the headline", () => {
     render(<Hero />);
     const h1 = screen.getByRole("heading", { level: 1 });
-    expect(h1).toHaveTextContent("La maternidad cambia todo.");
-    expect(h1).toHaveTextContent("Y es mejor vivirla acompañada.");
+    expect(h1).toHaveTextContent("La maternidad nos transforma.");
+    expect(h1).toHaveTextContent("La comunidad nos sostiene.");
+  });
+
+  it("does not render the removed eyebrow or description", () => {
+    render(<Hero />);
+    expect(screen.queryByText("Maternidad vivida en comunidad")).toBeNull();
+    expect(screen.queryByText(/NIDOU es un espacio/)).toBeNull();
+    expect(screen.getByRole("heading", { level: 1 })).not.toHaveClass("mt-6");
   });
 
   it("renders both CTAs", () => {
     render(<Hero />);
     expect(screen.getByRole("link", { name: "Únete a la comunidad" })).toHaveAttribute("href", "#unete");
-    expect(screen.getByRole("link", { name: "Descubre cómo funciona" })).toHaveAttribute("href", "#como-funciona");
+    expect(screen.getByRole("link", { name: "Descubre Nidou." })).toHaveAttribute("href", "#como-funciona");
   });
 
   it("does not hide above-the-fold content behind the scroll reveal", () => {
@@ -34,7 +41,7 @@ describe("Hero", () => {
 
   it("uses the text-safe sage token for the accent headline", () => {
     render(<Hero />);
-    expect(screen.getByText("Y es mejor vivirla acompañada.")).toHaveClass("text-secondary-text");
+    expect(screen.getByText("La comunidad nos sostiene.")).toHaveClass("text-secondary-text");
   });
 
   it("shows the hero photo and the feeling card", () => {

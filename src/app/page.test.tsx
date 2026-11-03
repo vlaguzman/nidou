@@ -16,4 +16,20 @@ describe("Page", () => {
       expect(container.querySelector(`#${id}`), id).not.toBeNull();
     }
   });
+
+  it("renders sections in the expected order", () => {
+    const { container } = render(<Page />);
+    const order = ["inicio", "historias", "bienestar", "como-funciona", "comunidad", "unete"];
+    const positions = order.map((id) => {
+      const el = container.querySelector(`#${id}`)!;
+      return Array.from(container.querySelectorAll("section")).indexOf(el as HTMLElement);
+    });
+    expect(positions).toEqual([...positions].sort((a, b) => a - b));
+    // CommunityIntro sits right after the hero and before testimonials.
+    const sections = Array.from(container.querySelectorAll("main > section"));
+    expect(sections[0].id).toBe("inicio");
+    expect(sections[1]).toHaveTextContent("es una comunidad donde nos encontramos");
+    expect(sections[2].id).toBe("historias");
+    expect(sections.at(-1)!.id).toBe("unete");
+  });
 });

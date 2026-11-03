@@ -4,8 +4,17 @@ import { sectionIds } from "./site";
 
 describe("hero data", () => {
   it("has the headline in two parts", () => {
-    expect(hero.headline.lead).toBe("La maternidad cambia todo.");
-    expect(hero.headline.accent).toBe("Y es mejor vivirla acompañada.");
+    expect(hero.headline.lead).toBe("La maternidad nos transforma.");
+    expect(hero.headline.accent).toBe("La comunidad nos sostiene.");
+  });
+
+  it("has no eyebrow or description", () => {
+    expect(hero).not.toHaveProperty("eyebrow");
+    expect(hero).not.toHaveProperty("description");
+  });
+
+  it("labels the secondary CTA", () => {
+    expect(hero.secondaryCta.label).toBe("Descubre Nidou.");
   });
 
   it("points both CTAs to existing sections", () => {

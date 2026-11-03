@@ -19,7 +19,7 @@ export function EmotionalHistory() {
   const [lead, detail] = emotionalHistory.paragraphs;
 
   return (
-    <section className="bg-muted/40 py-28 sm:py-36">
+    <section className="bg-muted/40 py-18 sm:py-24">
       <div className="mx-auto grid max-w-6xl gap-16 px-5 sm:px-8 lg:grid-cols-2 lg:items-center">
         <Reveal>
           <Eyebrow>{emotionalHistory.eyebrow}</Eyebrow>

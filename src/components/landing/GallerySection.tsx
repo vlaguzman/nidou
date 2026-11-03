@@ -6,7 +6,7 @@ import { Reveal } from "./Reveal";
 
 export function GallerySection() {
   return (
-    <section id={sectionIds.comunidad} className="bg-background py-28 sm:py-36">
+    <section id={sectionIds.comunidad} className="bg-background py-18 sm:py-24">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <Reveal>
