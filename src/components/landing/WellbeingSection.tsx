@@ -1,18 +1,21 @@
 import { ArrowDown } from "lucide-react";
 import { sectionIds } from "@/data/site";
-import { flow, wellbeing } from "@/data/wellbeing";
+import { getWellbeing } from "@/data/wellbeing";
+import type { Locale } from "@/i18n/config";
 import { EmotionalChart } from "./EmotionalChart";
 import { Eyebrow } from "./Eyebrow";
 import { Reveal } from "./Reveal";
 
-export function WellbeingSection() {
+export function WellbeingSection({ lang }: { lang: Locale }) {
+  const wellbeing = getWellbeing(lang);
+  const { flow, chart } = wellbeing;
   const [lead, detail] = wellbeing.paragraphs;
 
   return (
     <section id={sectionIds.bienestar} className="bg-muted/40 py-18 sm:py-24">
       <div className="mx-auto grid max-w-6xl gap-16 px-5 sm:px-8 lg:grid-cols-2 lg:items-center">
         <Reveal className="order-2 lg:order-1">
-          <EmotionalChart />
+          <EmotionalChart chart={chart} />
 
           <div className="mt-8 rounded-3xl border border-border/70 bg-card/60 p-6">
             <ol className="space-y-1">

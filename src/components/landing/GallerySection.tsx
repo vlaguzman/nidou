@@ -1,10 +1,13 @@
 import Image from "next/image";
-import { gallery } from "@/data/gallery";
+import { getGallery } from "@/data/gallery";
 import { sectionIds } from "@/data/site";
+import type { Locale } from "@/i18n/config";
 import { Eyebrow } from "./Eyebrow";
 import { Reveal } from "./Reveal";
 
-export function GallerySection() {
+export function GallerySection({ lang }: { lang: Locale }) {
+  const gallery = getGallery(lang);
+
   return (
     <section id={sectionIds.comunidad} className="bg-background py-18 sm:py-24">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">

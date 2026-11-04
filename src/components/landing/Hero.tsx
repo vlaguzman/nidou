@@ -1,9 +1,13 @@
 import Image from "next/image";
-import { hero } from "@/data/hero";
+import { getFeelings } from "@/data/feelings";
+import { getHero } from "@/data/hero";
 import { sectionIds } from "@/data/site";
+import type { Locale } from "@/i18n/config";
 import { FeelingCard } from "./FeelingCard";
 
-export function Hero() {
+export function Hero({ lang }: { lang: Locale }) {
+  const hero = getHero(lang);
+
   return (
     <section
       id={sectionIds.inicio}
@@ -46,7 +50,7 @@ export function Hero() {
         </div>
 
         <div className="flex justify-center lg:justify-end">
-          <FeelingCard />
+          <FeelingCard content={getFeelings(lang)} />
         </div>
       </div>
     </section>

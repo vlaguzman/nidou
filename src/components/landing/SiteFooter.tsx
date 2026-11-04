@@ -1,11 +1,14 @@
 import { Mail } from "lucide-react";
 import Image from "next/image";
-import { footer } from "@/data/site";
+import { getSite } from "@/data/site";
+import type { Locale } from "@/i18n/config";
 
 const iconLink =
   "flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground";
 
-export function SiteFooter() {
+export function SiteFooter({ lang }: { lang: Locale }) {
+  const { footer } = getSite(lang);
+
   return (
     <footer className="border-t border-border bg-background py-16">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
@@ -41,10 +44,10 @@ export function SiteFooter() {
             © {new Date().getFullYear()} NIDOU. {footer.closing}
           </p>
           <div className="flex items-center gap-4">
-            <a href={`mailto:${footer.email}`} aria-label="Escríbenos un correo" className={iconLink}>
+            <a href={`mailto:${footer.email}`} aria-label={footer.emailLabel} className={iconLink}>
               <Mail className="h-4 w-4" aria-hidden />
             </a>
-            <a href={footer.instagramHref} aria-label="Síguenos en Instagram" className={`${iconLink} text-sm`}>
+            <a href={footer.instagramHref} aria-label={footer.instagramLabel} className={`${iconLink} text-sm`}>
               <span aria-hidden>IG</span>
             </a>
           </div>

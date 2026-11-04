@@ -1,38 +1,85 @@
 import { Cloud, CloudLightning, CloudRain, CloudSun, Sun } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import type { Locale } from "@/i18n/config";
 
-// Level 0 = hardest day (stormy), level 4 = brightest day (sunny).
-export const moodScale = [
-  { level: 0, mood: "Tormentoso", icon: CloudLightning, color: "text-foreground" },
-  { level: 1, mood: "Lluvioso", icon: CloudRain, color: "text-foreground/70" },
-  { level: 2, mood: "Nublado", icon: Cloud, color: "text-muted-foreground" },
-  { level: 3, mood: "Despejando", icon: CloudSun, color: "text-secondary-text" },
-  { level: 4, mood: "Luminoso", icon: Sun, color: "text-accent-text" },
+export type MoodLevel = { level: number; mood: string; icon: LucideIcon; color: string };
+
+export type EmotionalHistoryContent = {
+  eyebrow: string;
+  heading: string;
+  quote: string;
+  paragraphs: string[];
+  card: { title: string; subtitle: string };
+  moodScale: MoodLevel[];
+  moodTimeline: (MoodLevel & { date: string })[];
+};
+
+// Level 0 = hardest day (stormy), level 4 = brightest day (sunny). Icons, colours and levels are locale-neutral.
+const SCALE = [
+  { icon: CloudLightning, color: "text-foreground" },
+  { icon: CloudRain, color: "text-foreground/70" },
+  { icon: Cloud, color: "text-muted-foreground" },
+  { icon: CloudSun, color: "text-secondary-text" },
+  { icon: Sun, color: "text-accent-text" },
 ];
 
-const logged = [
-  { date: "2 may", level: 0 },
-  { date: "9 may", level: 1 },
-  { date: "16 may", level: 2 },
-  { date: "23 may", level: 3 },
-  { date: "30 may", level: 4 },
-  { date: "6 jun", level: 1 },
-];
+const TIMELINE_LEVELS = [0, 1, 2, 3, 4, 1];
 
-export const moodTimeline = logged.map(({ date, level }) => ({
-  date,
-  ...moodScale[level],
-}));
+type Text = {
+  eyebrow: string;
+  heading: string;
+  quote: string;
+  paragraphs: string[];
+  card: { title: string; subtitle: string };
+  moods: string[];
+  dates: string[];
+};
 
-export const emotionalHistory = {
-  eyebrow: "Autoconocimiento",
-  heading: "Tu historia emocional",
-  quote: "No se trata de siempre estar bien, sino de darte cuenta cómo estás.",
-  paragraphs: [
-    "Con el tiempo, cada madre puede descubrir patrones, reconocer los momentos más difíciles y valorar qué experiencias le ayudan a sentirse mejor.",
-    "No es un análisis clínico. Es una forma serena de conocerte mejor y de recordarte, en los días difíciles, todo el camino que ya has recorrido.",
-  ],
-  card: {
-    title: "Tu registro emocional",
-    subtitle: "Una mirada a tu camino, sin presión.",
+const TEXT: Record<Locale, Text> = {
+  es: {
+    eyebrow: "Autoconocimiento",
+    heading: "Tu historia emocional",
+    quote: "No se trata de siempre estar bien, sino de darte cuenta cómo estás.",
+    paragraphs: [
+      "Con el tiempo, cada madre puede descubrir patrones, reconocer los momentos más difíciles y valorar qué experiencias le ayudan a sentirse mejor.",
+      "No es un análisis clínico. Es una forma serena de conocerte mejor y de recordarte, en los días difíciles, todo el camino que ya has recorrido.",
+    ],
+    card: {
+      title: "Tu registro emocional",
+      subtitle: "Una mirada a tu camino, sin presión.",
+    },
+    moods: ["Tormentoso", "Lluvioso", "Nublado", "Despejando", "Luminoso"],
+    dates: ["2 may", "9 may", "16 may", "23 may", "30 may", "6 jun"],
+  },
+  en: {
+    eyebrow: "Self-awareness",
+    heading: "Your emotional story",
+    quote: "It is not about always being okay, but about noticing how you are.",
+    paragraphs: [
+      "Over time, every mother can spot patterns, recognise the hardest moments and see which experiences help her feel better.",
+      "It is not a clinical analysis. It is a gentle way of getting to know yourself better and of reminding yourself, on the hard days, how far you have already come.",
+    ],
+    card: {
+      title: "Your emotional log",
+      subtitle: "A look at your journey, with no pressure.",
+    },
+    moods: ["Stormy", "Rainy", "Cloudy", "Clearing up", "Radiant"],
+    dates: ["May 2", "May 9", "May 16", "May 23", "May 30", "Jun 6"],
   },
 };
+
+function build(lang: Locale): EmotionalHistoryContent {
+  const { moods, dates, ...copy } = TEXT[lang];
+  const moodScale = SCALE.map((s, level) => ({ level, mood: moods[level], ...s }));
+  const moodTimeline = TIMELINE_LEVELS.map((level, i) => ({ date: dates[i], ...moodScale[level] }));
+  return { ...copy, moodScale, moodTimeline };
+}
+
+const EMOTIONAL_HISTORY: Record<Locale, EmotionalHistoryContent> = {
+  es: build("es"),
+  en: build("en"),
+};
+
+export function getEmotionalHistory(lang: Locale): EmotionalHistoryContent {
+  return EMOTIONAL_HISTORY[lang];
+}

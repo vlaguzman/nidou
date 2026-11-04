@@ -2,7 +2,7 @@
 
 # NIDOU landing page
 
-Single-page, Spanish-only landing for NIDOU (motherhood community + emotional wellbeing tracking). No i18n library, no `[lang]` routing.
+Single-page, bilingual (Spanish/English) landing for NIDOU (motherhood community + emotional wellbeing tracking). No i18n library: locale routing is hand-rolled under `src/i18n/`.
 
 ## Stack
 
@@ -14,11 +14,22 @@ Single-page, Spanish-only landing for NIDOU (motherhood community + emotional we
 
 ## Structure
 
-- `src/app/` layout, page, global CSS, favicon (`icon.svg`).
-- `src/components/landing/` one PascalCase named-export component per section, flat, with its `*.test.tsx` next to it. Page order: SiteHeader, Hero (+FeelingCard), CommunityIntro, Testimonials, ValuesSection, WellbeingSection (+EmotionalChart), HowItWorks, GallerySection, EmotionalHistory, FinalCta, SiteFooter. Helpers: Reveal (scroll reveal), Enso (logo mark), Eyebrow.
+- `src/app/[lang]/` layout and page (routes `/es` and `/en`), `src/app/globals.css`, favicon `src/app/icon.svg`.
+- `src/i18n/` `config.ts` (`LOCALES`, `DEFAULT_LOCALE = "es"`, `hasLocale`, `localePath`, `pickLocale`, `alternatesFor`) and `redirect.ts`. `src/proxy.ts` (Next 16 proxy) redirects unprefixed paths with a 307 to `/es` or `/en` using `Accept-Language`, falling back to Spanish; its matcher skips `_next`, `api` and anything with a file extension (images, `icon.svg`).
+- `src/components/landing/` one PascalCase named-export component per section, flat, with its `*.test.tsx` next to it. Page order: SiteHeader, Hero (+FeelingCard), CommunityIntro, Testimonials, ValuesSection, WellbeingSection (+EmotionalChart), HowItWorks, GallerySection, EmotionalHistory, FinalCta, SiteFooter. Helpers: Reveal (scroll reveal), Enso (logo mark), Eyebrow, LanguageSwitcher (EN/ES links in the SiteHeader desktop bar and inside the mobile menu).
 - `src/data/` ALL copy and content, typed, one module per section, each with a `*.test.ts`. Components must not hardcode copy; section anchors come from `sectionIds` in `src/data/site.ts`.
+- `src/test/shape.ts` structural fingerprint used by data tests.
 - `src/lib/` pure helpers (chart geometry).
 - `public/` static assets (`images/*.webp`, `nidou-logo.webp`).
+
+## i18n
+
+- Each data module holds a `Record<Locale, Content>` and exports `getX(lang)`. Locale-neutral values (`sectionIds`, hrefs, image paths, `joinHref`, email, chart numbers, icons) are defined once and shared. Anchor ids stay the Spanish ones in both locales.
+- Every data test asserts `shape(getX("en"))` equals `shape(getX("es"))`, so a missing translation or item count mismatch fails.
+- Server sections take a `lang: Locale` prop and call the getters. Client components (`SiteHeaderBar`, `FeelingCard`, `EmotionalChart`, `TestimonialList`, `FinalCtaForm`) receive their content via props from a server parent and must not import data modules (type-only imports are fine). Sections that need client state are a server wrapper plus a client child (e.g. `Testimonials` + `TestimonialList`).
+- The layout sets `<html lang>`, has `dynamicParams = false` and per-locale `generateMetadata` (title/description). There is no `metadataBase` or hreflang `alternates` yet because the site has no production URL; add both (`alternatesFor`) when it does.
+- `LanguageSwitcher` takes `lang`, `path` and the `label` (`languageLabel` in site data); it links `/` to `/es` and `/en` with `next/link`.
+- After moving routes, delete the stale generated `.next` directory before `npm run typecheck`.
 
 ## Conventions
 
@@ -33,4 +44,5 @@ Single-page, Spanish-only landing for NIDOU (motherhood community + emotional we
 ## Known placeholders
 
 - `FinalCta` email form only flips local state and discards the email; there is no backend yet (the confirmation copy says so honestly).
+- The Google Form behind `joinHref` is a Spanish-language destination for both locales, and the `FinalCta` signup has no backend (the confirmation text is translated, but nothing is collected); only the surrounding UI copy is translated.
 - `href="#"` in the footer ("Sobre nosotras", Instagram) has no destination yet. The "Me sumo al siguiente" button in `FeelingCard` only links somewhere for the "Sola" mood (a Google Form, via `joinHref`); the other moods still render a placeholder button with no destination.

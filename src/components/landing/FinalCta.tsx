@@ -1,26 +1,12 @@
-"use client";
-
-import { useEffect, useRef, useState, type FormEvent } from "react";
-import { finalCta } from "@/data/finalCta";
+import { getFinalCta } from "@/data/finalCta";
 import { sectionIds } from "@/data/site";
+import type { Locale } from "@/i18n/config";
 import { Enso } from "./Enso";
+import { FinalCtaForm } from "./FinalCtaForm";
 import { Reveal } from "./Reveal";
 
-export function FinalCta() {
-  const [email, setEmail] = useState("");
-  const [sent, setSent] = useState(false);
-  const statusRef = useRef<HTMLParagraphElement>(null);
-
-  // The form unmounts on submit, so hand focus to the confirmation message.
-  useEffect(() => {
-    if (sent) statusRef.current?.focus();
-  }, [sent]);
-
-  // No backend yet: submitting only flips local state.
-  function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    if (email.trim()) setSent(true);
-  }
+export function FinalCta({ lang }: { lang: Locale }) {
+  const finalCta = getFinalCta(lang);
 
   return (
     <section
@@ -44,48 +30,7 @@ export function FinalCta() {
           </p>
         </Reveal>
 
-        <Reveal delay={150}>
-          {/* Rendered before submit so screen readers register the live region, then filled on submit. */}
-          <p
-            ref={statusRef}
-            role="status"
-            tabIndex={-1}
-            className={
-              sent
-                ? "mx-auto mt-10 max-w-sm rounded-2xl bg-background/70 px-6 py-5 text-foreground focus:outline-none"
-                : undefined
-            }
-          >
-            {sent ? finalCta.thanks : null}
-          </p>
-          {!sent && (
-            <form
-              onSubmit={handleSubmit}
-              className="mx-auto mt-10 flex max-w-md flex-col gap-3 sm:flex-row"
-            >
-              <label htmlFor="cta-email" className="sr-only">
-                {finalCta.form.emailLabel}
-              </label>
-              <input
-                id="cta-email"
-                name="email"
-                autoComplete="email"
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder={finalCta.form.emailPlaceholder}
-                className="h-12 flex-1 rounded-full border border-background/40 bg-background/90 px-5 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-background"
-              />
-              <button
-                type="submit"
-                className="h-12 rounded-full bg-primary px-7 font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-              >
-                {finalCta.form.submitLabel}
-              </button>
-            </form>
-          )}
-        </Reveal>
+        <FinalCtaForm form={finalCta.form} thanks={finalCta.thanks} />
       </div>
     </section>
   );
