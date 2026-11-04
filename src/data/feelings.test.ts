@@ -47,6 +47,28 @@ describe("feelings data", () => {
     }
   });
 
+  it("gives every mood its own insight in both locales, with sources only on the stat moods", () => {
+    const sources = {
+      agotada: "NCT, 2026",
+      sola: "NCT, 2026",
+      saturada: "The Lancet Public Health, 2023",
+    } as Record<string, string>;
+    for (const lang of LOCALES) {
+      const { moods, card } = getFeelings(lang);
+      expect(card).not.toHaveProperty("insight");
+      for (const mood of moods) {
+        expect(mood.insight.text.length).toBeGreaterThan(0);
+        expect(mood.insight.source).toBe(sources[mood.id]);
+      }
+      expect(moods.filter((m) => m.tone === "calm").every((m) => m.insight.source === undefined)).toBe(true);
+    }
+    expect(getFeelings("es").card.sourceLabel).toBe("Fuente");
+    expect(getFeelings("en").card.sourceLabel).toBe("Source");
+    expect(getFeelings("es").moods.find((m) => m.id === "sola")?.insight.text).toBe(
+      "En Reino Unido, el 62% de las madres y padres se sintió solo o aislado al menos parte del tiempo después de tener un bebé.",
+    );
+  });
+
   it("has card copy", () => {
     expect(getFeelings("es").card.question).toBe("¿Cómo te sientes hoy?");
     expect(getFeelings("en").card.question).toBe("How are you feeling today?");
@@ -54,5 +76,14 @@ describe("feelings data", () => {
 
   it("has the same shape in both locales", () => {
     expect(shape(getFeelings("en"))).toEqual(shape(getFeelings("es")));
+  });
+
+  it("states the NCT scope and rounding honestly for agotada", () => {
+    expect(getFeelings("es").moods.find((m) => m.id === "agotada")!.insight.text).toBe(
+      'En Reino Unido, cerca de 1 de cada 8 madres y padres dijo sentirse solo siempre después de tener un bebé. No tienes que cargar con todo sola.',
+    );
+    expect(getFeelings("en").moods.find((m) => m.id === "agotada")!.insight.text).toBe(
+      "In the UK, nearly 1 in 8 mothers and fathers said they always felt lonely after having a baby. You don't have to carry it all alone.",
+    );
   });
 });

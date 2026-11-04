@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import type { FeelingsContent } from "@/data/feelings";
 
+const hiddenFace = "absolute inset-x-0 top-0";
+
 const faceBase =
   "rounded-3xl border border-border/70 bg-card p-7 shadow-[0_24px_60px_-30px_rgba(46,54,61,0.35)] [backface-visibility:hidden]";
 
@@ -30,14 +32,15 @@ export function FeelingCard({ content }: { content: FeelingsContent }) {
   }
 
   return (
-    <div className="min-h-76 w-full max-w-sm [perspective:1600px]">
+    <div className="w-full max-w-sm [perspective:1600px]">
       <div
-        className={`grid h-full min-h-76 w-full transition-transform duration-500 ease-[cubic-bezier(0.4,0.15,0.2,1)] [transform-style:preserve-3d] motion-reduce:transition-none ${
+        className={`relative w-full transition-transform duration-500 ease-[cubic-bezier(0.4,0.15,0.2,1)] [transform-style:preserve-3d] motion-reduce:transition-none ${
           flipped ? "[transform:rotateY(180deg)]" : ""
         }`}
       >
         {/* FRONT */}
-        <div data-face="front" inert={flipped} className={`${faceBase} col-start-1 row-start-1`}>
+        {/* Only the visible face is in flow, so the card is as tall as that face; the hidden one is absolute and backface-hidden. */}
+        <div data-face="front" inert={flipped} className={`${faceBase} ${flipped ? hiddenFace : ""}`}>
           <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
             {feelingCard.eyebrow}
           </p>
@@ -70,18 +73,13 @@ export function FeelingCard({ content }: { content: FeelingsContent }) {
               );
             })}
           </div>
-
-          <div className="mt-7 flex items-start gap-3 rounded-2xl bg-muted/70 p-4">
-            <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-secondary" aria-hidden />
-            <p className="text-sm leading-relaxed text-muted-foreground">{feelingCard.insight}</p>
-          </div>
         </div>
 
         {/* BACK */}
         <div
           data-face="back"
           inert={!flipped}
-          className={`${faceBase} col-start-1 row-start-1 flex flex-col [transform:rotateY(180deg)]`}
+          className={`${faceBase} flex flex-col [transform:rotateY(180deg)] ${flipped ? "" : hiddenFace}`}
         >
           <div className="flex items-center justify-between">
             <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
@@ -107,6 +105,29 @@ export function FeelingCard({ content }: { content: FeelingsContent }) {
           <p className="mt-3 text-pretty text-sm leading-relaxed text-muted-foreground">
             {active.description}
           </p>
+
+          {/* Fades and unfolds with each flip, so the message appears with the back and disappears with it. */}
+          <div
+            data-insight
+            data-state={flipped ? "open" : "closed"}
+            className={`grid transition-[grid-template-rows,opacity] duration-500 ease-[cubic-bezier(0.4,0.15,0.2,1)] motion-reduce:transition-none ${
+              flipped ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+            }`}
+          >
+            <div className="overflow-hidden">
+              <div className="mt-5 flex items-start gap-3 rounded-2xl bg-muted/70 p-4">
+                <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-secondary" aria-hidden />
+                <div>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{active.insight.text}</p>
+                  {active.insight.source ? (
+                    <p className="mt-1.5 text-xs text-muted-foreground/80">
+                      {feelingCard.sourceLabel}: {active.insight.source}
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div className="mt-auto pt-6">
             {active.joinHref ? (
