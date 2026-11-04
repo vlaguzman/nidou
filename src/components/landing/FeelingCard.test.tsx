@@ -42,11 +42,11 @@ describe("FeelingCard", () => {
     expect(faces[0]).not.toHaveAttribute("inert");
   });
 
-  it("links the Sola mood to the Google Form in a new tab", () => {
-    render(<FeelingCard content={feelings} />);
-    fireEvent.click(screen.getByRole("button", { name: "Sola" }));
+  it("links the Saturada mood to the Google Form in a new tab", () => {
+    render(<FeelingCard />);
+    fireEvent.click(screen.getByRole("button", { name: "Saturada" }));
     const link = screen.getByRole("link", { name: "Me sumo al siguiente" });
-    expect(link).toHaveAttribute("href", moods.find((m) => m.id === "sola")!.joinHref);
+    expect(link).toHaveAttribute("href", moods.find((m) => m.id === "saturada")!.joinHref);
     expect(link).toHaveAttribute(
       "href",
       "https://docs.google.com/forms/d/e/1FAIpQLSetgdHB1sEZDFp6GFSCGwF3d9zb43YxrrIwIEHou5MuWzPdWg/viewform?usp=header",
@@ -56,8 +56,8 @@ describe("FeelingCard", () => {
   });
 
   it("keeps the placeholder button for moods without a join link", () => {
-    render(<FeelingCard content={feelings} />);
-    fireEvent.click(screen.getByRole("button", { name: "Agotada" }));
+    render(<FeelingCard />);
+    fireEvent.click(screen.getByRole("button", { name: "Sola" }));
     expect(screen.queryByRole("link", { name: "Me sumo al siguiente" })).toBeNull();
     expect(screen.getByRole("button", { name: "Me sumo al siguiente" })).toBeInTheDocument();
   });

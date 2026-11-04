@@ -44,5 +44,4 @@ Single-page, bilingual (Spanish/English) landing for NIDOU (motherhood community
 ## Known placeholders
 
 - `FinalCta` email form only flips local state and discards the email; there is no backend yet (the confirmation copy says so honestly).
-- The Google Form behind `joinHref` is a Spanish-language destination for both locales, and the `FinalCta` signup has no backend (the confirmation text is translated, but nothing is collected); only the surrounding UI copy is translated.
-- `href="#"` in the footer ("Sobre nosotras", Instagram) has no destination yet. The "Me sumo al siguiente" button in `FeelingCard` only links somewhere for the "Sola" mood (a Google Form, via `joinHref`); the other moods still render a placeholder button with no destination.
+- `href="#"` in the footer ("Sobre nosotras", Instagram) has no destination yet. The "Me sumo al siguiente" button in `FeelingCard` only links somewhere for the "Saturada" mood ("Cita con el artista") (a Google Form, via `joinHref`); the other moods still render a placeholder button with no destination.
