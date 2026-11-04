@@ -37,12 +37,14 @@ describe("feelings data", () => {
     expect(en.sola).toBe("Shall we grab a coffee?");
   });
 
-  it("only the saturada mood has a join link (Google Form)", () => {
-    const withHref = moods.filter((m) => m.joinHref);
-    expect(withHref.map((m) => m.id)).toEqual(["saturada"]);
-    expect(withHref[0].joinHref).toBe(
-      "https://docs.google.com/forms/d/e/1FAIpQLSetgdHB1sEZDFp6GFSCGwF3d9zb43YxrrIwIEHou5MuWzPdWg/viewform?usp=header",
-    );
+  it("only the saturada mood has a join link (Google Form), the same in both locales", () => {
+    for (const lang of LOCALES) {
+      const withHref = getFeelings(lang).moods.filter((m) => m.joinHref);
+      expect(withHref.map((m) => m.id)).toEqual(["saturada"]);
+      expect(withHref[0].joinHref).toBe(
+        "https://docs.google.com/forms/d/e/1FAIpQLSetgdHB1sEZDFp6GFSCGwF3d9zb43YxrrIwIEHou5MuWzPdWg/viewform?usp=header",
+      );
+    }
   });
 
   it("has card copy", () => {

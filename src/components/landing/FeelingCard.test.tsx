@@ -43,7 +43,7 @@ describe("FeelingCard", () => {
   });
 
   it("links the Saturada mood to the Google Form in a new tab", () => {
-    render(<FeelingCard />);
+    render(<FeelingCard content={feelings} />);
     fireEvent.click(screen.getByRole("button", { name: "Saturada" }));
     const link = screen.getByRole("link", { name: "Me sumo al siguiente" });
     expect(link).toHaveAttribute("href", moods.find((m) => m.id === "saturada")!.joinHref);
@@ -56,8 +56,8 @@ describe("FeelingCard", () => {
   });
 
   it("keeps the placeholder button for moods without a join link", () => {
-    render(<FeelingCard />);
-    fireEvent.click(screen.getByRole("button", { name: "Sola" }));
+    render(<FeelingCard content={feelings} />);
+    fireEvent.click(screen.getByRole("button", { name: "Agotada" }));
     expect(screen.queryByRole("link", { name: "Me sumo al siguiente" })).toBeNull();
     expect(screen.getByRole("button", { name: "Me sumo al siguiente" })).toBeInTheDocument();
   });
@@ -112,10 +112,10 @@ describe("FeelingCard in English", () => {
 
   it("flips to the English suggestion and keeps the shared form link", () => {
     render(<FeelingCard content={en} />);
-    fireEvent.click(screen.getByRole("button", { name: "Lonely" }));
-    expect(screen.getByRole("heading", { name: "Shall we grab a coffee?" })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Overwhelmed" }));
+    expect(screen.getByRole("heading", { name: "Date with the artist" })).toBeInTheDocument();
     const link = screen.getByRole("link", { name: en.card.join });
-    expect(link).toHaveAttribute("href", moods.find((m) => m.id === "sola")!.joinHref);
+    expect(link).toHaveAttribute("href", moods.find((m) => m.id === "saturada")!.joinHref);
     expect(screen.getByRole("button", { name: /Back/ })).toBeInTheDocument();
   });
 });
