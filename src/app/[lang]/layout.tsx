@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Geist } from "next/font/google";
 import { notFound } from "next/navigation";
-import { getSite } from "@/data/site";
-import { hasLocale, LOCALES } from "@/i18n/config";
+import { getSite, SITE_URL } from "@/data/site";
+import { alternatesFor, hasLocale, LOCALES } from "@/i18n/config";
 import "../globals.css";
 
 const geist = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -15,12 +15,11 @@ export function generateStaticParams() {
   return LOCALES.map((lang) => ({ lang }));
 }
 
-// No metadataBase / hreflang alternates yet: the site has no canonical production URL to resolve them against.
 export async function generateMetadata({ params }: Pick<LayoutProps<"/[lang]">, "params">): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
   const { title, description } = getSite(lang).metadata;
-  return { title, description };
+  return { metadataBase: new URL(SITE_URL), title, description, alternates: alternatesFor(lang, "/") };
 }
 
 export const viewport: Viewport = {

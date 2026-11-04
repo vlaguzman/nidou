@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { shape } from "@/test/shape";
-import { getSite, INSTAGRAM_HREF, sectionIds } from "./site";
+import { getSite, INSTAGRAM_HREF, sectionIds, SITE_URL } from "./site";
 
 const LOCALES = ["es", "en"] as const;
 
@@ -12,6 +12,12 @@ const internalAnchors = (lang: (typeof LOCALES)[number]) => {
 };
 
 describe("site data", () => {
+  it("uses the production origin, without a path or trailing slash, as the site URL", () => {
+    expect(SITE_URL).toBe("https://nidou.co.uk");
+    expect(new URL(SITE_URL).pathname).toBe("/");
+    expect(SITE_URL.endsWith("/")).toBe(false);
+  });
+
   it("exposes metadata for the page in each locale", () => {
     for (const lang of LOCALES) {
       const { metadata } = getSite(lang);
