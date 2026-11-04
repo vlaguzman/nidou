@@ -19,7 +19,7 @@ describe("ValuesSection", () => {
 describe("ValuesSection in English", () => {
   it("renders the English heading and values", () => {
     render(<ValuesSection lang="en" />);
-    expect(screen.getByRole("heading", { level: 2 })).toHaveTextContent(/taking care of yourself/);
+    expect(screen.getByRole("heading", { level: 2 })).toHaveTextContent(/looking after yourself/);
     for (const title of ["Listen to yourself", "Connect", "Grow"]) {
       expect(screen.getByRole("heading", { name: title })).toBeInTheDocument();
     }

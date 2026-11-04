@@ -39,19 +39,19 @@ const TESTIMONIALS: Record<Locale, TestimonialsContent> = {
     items: [
       {
         quote:
-          "The date with the artist that Adriana taught me made me realise that it really is possible to create lovely, artistic things while giving myself some time. It is so rewarding to see the final result and to know that one day Luca will keep it as a memory of his mum's love. Thank you, Adri, for helping me find the artist inside me and for sharing your time with me on this adventure of motherhood.",
+          "The date with the artist that Adriana taught me made me realize that it really is possible to create lovely, artistic things while giving myself some time. It's so rewarding to see the final result and to know that one day Luca will keep it as a memory of his mom's love. Thank you, Adri, for helping me find the artist inside me and for sharing your time with me on this adventure of motherhood.",
         name: "Laura",
         detail: "Date with the artist",
         collapsible: true,
       },
       {
         quote:
-          "It is worth taking a moment for yourself. I didn't know how much I needed to breathe deeply and with intention, and to recognise everything I am capable of.",
+          "It's worth taking some time for yourself. I didn't know how much I needed to breathe deeply and with intention, and to recognize everything I'm capable of.",
         name: "Ana",
         detail: "Shared presence",
       },
       {
-        quote: "I felt that I am not alone; I felt welcomed and heard.",
+        quote: "I felt I wasn't alone. I felt welcomed and heard.",
         name: "Annie",
         detail: "Shared presence",
       },

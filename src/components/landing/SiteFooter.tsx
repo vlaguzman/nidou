@@ -47,7 +47,13 @@ export function SiteFooter({ lang }: { lang: Locale }) {
             <a href={`mailto:${footer.email}`} aria-label={footer.emailLabel} className={iconLink}>
               <Mail className="h-4 w-4" aria-hidden />
             </a>
-            <a href={footer.instagramHref} aria-label={footer.instagramLabel} className={`${iconLink} text-sm`}>
+            <a
+              href={footer.instagramHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={footer.instagramLabel}
+              className={`${iconLink} text-sm`}
+            >
               <span aria-hidden>IG</span>
             </a>
           </div>

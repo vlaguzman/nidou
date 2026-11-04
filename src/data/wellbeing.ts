@@ -35,11 +35,11 @@ const WELLBEING: Record<Locale, WellbeingContent> = {
     },
   },
   en: {
-    eyebrow: "Wellbeing, tracked",
-    heading: "Your wellbeing deserves a little follow-up too.",
+    eyebrow: "Tracking your wellbeing",
+    heading: "Your wellbeing deserves some attention too.",
     paragraphs: [
-      "NIDOU doesn't just organise gatherings. It also helps you understand how those moments affect your emotional wellbeing.",
-      "You note how you feel before each gathering, take part, and afterwards reflect on how it made you feel. Over time, those small notes become a story that belongs only to you.",
+      "NIDOU doesn't just organize gatherings. It also helps you understand how those moments affect your emotional wellbeing.",
+      "You check in before each gathering, take part, and afterwards reflect on how it felt. Over time, those small check-ins become a story that belongs only to you.",
     ],
     flow: [
       "How I feel before",

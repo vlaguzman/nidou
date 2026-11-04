@@ -21,7 +21,7 @@ describe("HowItWorks in English", () => {
     const { container } = render(<HowItWorks lang="en" />);
     expect(screen.getByRole("heading", { name: "How it works" })).toBeInTheDocument();
     expect(screen.getAllByRole("listitem")).toHaveLength(5);
-    expect(screen.getByText("Share how you are feeling.")).toBeInTheDocument();
+    expect(screen.getByText("Share how you're feeling.")).toBeInTheDocument();
     expect(container.querySelector("section#como-funciona")).not.toBeNull();
   });
 });

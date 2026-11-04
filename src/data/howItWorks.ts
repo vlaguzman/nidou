@@ -20,13 +20,13 @@ const HOW_IT_WORKS: Record<Locale, HowItWorksContent> = {
   },
   en: {
     heading: "How it works",
-    subtitle: "Five simple steps to walk beside you at every stage.",
+    subtitle: "Five simple steps to support you at every stage.",
     steps: [
-      "Share how you are feeling.",
-      "Discover gatherings made for you.",
+      "Share how you're feeling.",
+      "Find gatherings made for you.",
       "Connect with other mothers.",
-      "Reflect after the experience.",
-      "Watch your wellbeing evolve.",
+      "Reflect afterwards.",
+      "See how your wellbeing changes.",
     ],
   },
 };

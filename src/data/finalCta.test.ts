@@ -17,7 +17,7 @@ describe("finalCta data", () => {
     const finalCta = getFinalCta("en");
     expect(finalCta.heading.length).toBeGreaterThan(10);
     expect(finalCta.form.submitLabel).toBe("Join the community");
-    expect(finalCta.thanks).toContain("Thank you for your interest");
+    expect(finalCta.thanks).toContain("Thanks for your interest");
   });
 
   it("has the same shape in both locales", () => {

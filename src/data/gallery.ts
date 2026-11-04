@@ -66,7 +66,7 @@ const GALLERY: Record<Locale, GalleryContent> = {
   },
   en: {
     eyebrow: "Real bonds",
-    heading: "We don't just gather mothers. We build bonds.",
+    heading: "We don't just bring mothers together. We build bonds.",
     description:
       "Every gathering starts with a conversation and can grow into a network of support that stays.",
     photos: photosFor("en"),

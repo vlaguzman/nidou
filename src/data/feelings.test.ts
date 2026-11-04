@@ -34,7 +34,7 @@ describe("feelings data", () => {
     expect(t.saturada).toBe("Cita con el artista");
     expect(t.conectada).toBe("Creatividad en comunidad");
     const en = Object.fromEntries(getFeelings("en").moods.map((m) => [m.id, m.title]));
-    expect(en.sola).toBe("Shall we grab a coffee?");
+    expect(en.sola).toBe("Want to grab a coffee?");
   });
 
   it("only the saturada mood has a join link (Google Form), the same in both locales", () => {

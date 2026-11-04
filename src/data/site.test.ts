@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { shape } from "@/test/shape";
-import { getSite, sectionIds } from "./site";
+import { getSite, INSTAGRAM_HREF, sectionIds } from "./site";
 
 const LOCALES = ["es", "en"] as const;
 
@@ -57,6 +57,11 @@ describe("site data", () => {
       expect(getSite(lang).footer.email).toMatch(/^[^@\s]+@[^@\s]+\.[^@\s]+$/);
     }
     expect(getSite("en").footer.email).toBe(getSite("es").footer.email);
+  });
+
+  it("points to the real Instagram profile from both locales", () => {
+    expect(INSTAGRAM_HREF).toBe("https://www.instagram.com/nidou.family");
+    for (const lang of LOCALES) expect(getSite(lang).footer.instagramHref).toBe(INSTAGRAM_HREF);
   });
 
   it("has the same shape in both locales", () => {

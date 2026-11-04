@@ -21,16 +21,16 @@ const FINAL_CTA: Record<Locale, FinalCtaContent> = {
       "Gracias por tu interés. Aún estamos preparando la comunidad; te avisaremos cuando abramos. 🌿",
   },
   en: {
-    heading: "Your refuge can begin right here, too.",
+    heading: "Your refuge can start here, too.",
     description:
-      "Start building a network where your emotions have a place of their own.",
+      "Start building a network where your emotions have room too.",
     form: {
       emailLabel: "Your email address",
       emailPlaceholder: "Your email address",
       submitLabel: "Join the community",
     },
     thanks:
-      "Thank you for your interest. We are still getting the community ready; we will let you know when we open. 🌿",
+      "Thanks for your interest. We're still getting the community ready, and we'll let you know when we open. 🌿",
   },
 };
 
