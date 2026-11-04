@@ -168,7 +168,7 @@ describe("FeelingCard in English", () => {
     render(<FeelingCard content={en} />);
     fireEvent.click(screen.getByRole("button", { name: "Lonely" }));
     expect(
-      screen.getByText("62% of mothers and fathers felt lonely or isolated after having a baby."),
+      screen.getByText("In the UK, 62% of mothers and fathers felt lonely or isolated at least some of the time after having a baby."),
     ).toBeInTheDocument();
     expect(screen.getByText("Source: NCT, 2026")).toBeInTheDocument();
   });

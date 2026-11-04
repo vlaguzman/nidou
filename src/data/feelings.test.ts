@@ -65,7 +65,7 @@ describe("feelings data", () => {
     expect(getFeelings("es").card.sourceLabel).toBe("Fuente");
     expect(getFeelings("en").card.sourceLabel).toBe("Source");
     expect(getFeelings("es").moods.find((m) => m.id === "sola")?.insight.text).toBe(
-      "El 62% de las madres y padres se sintió solo o aislado después de tener un bebé.",
+      "En Reino Unido, el 62% de las madres y padres se sintió solo o aislado al menos parte del tiempo después de tener un bebé.",
     );
   });
 
@@ -76,5 +76,14 @@ describe("feelings data", () => {
 
   it("has the same shape in both locales", () => {
     expect(shape(getFeelings("en"))).toEqual(shape(getFeelings("es")));
+  });
+
+  it("states the NCT scope and rounding honestly for agotada", () => {
+    expect(getFeelings("es").moods.find((m) => m.id === "agotada")!.insight.text).toBe(
+      'En Reino Unido, cerca de 1 de cada 8 madres y padres dijo sentirse solo siempre después de tener un bebé. No tienes que cargar con todo sola.',
+    );
+    expect(getFeelings("en").moods.find((m) => m.id === "agotada")!.insight.text).toBe(
+      "In the UK, nearly 1 in 8 mothers and fathers said they always felt lonely after having a baby. You don't have to carry it all alone.",
+    );
   });
 });

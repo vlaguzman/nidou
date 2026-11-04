@@ -59,7 +59,7 @@ const TEXT: Record<Locale, { moods: Record<string, MoodText>; card: FeelingsCont
         description:
           "Un espacio guiado para desconectar del ruido, recuperar energía y volver a ti. Una pausa consciente para recargar cuerpo y mente.",
         insight:
-          "1 de cada 8 madres y padres dijo sentirse solo siempre después de tener un bebé. No tienes que cargar con todo sola.",
+          "En Reino Unido, cerca de 1 de cada 8 madres y padres dijo sentirse solo siempre después de tener un bebé. No tienes que cargar con todo sola.",
       },
       sola: {
         label: "Sola",
@@ -67,7 +67,7 @@ const TEXT: Record<Locale, { moods: Record<string, MoodText>; card: FeelingsCont
         description:
           "No hay agenda. No hay presión. Solo conversaciones reales con mamás que probablemente sienten lo mismo que tú.",
         insight:
-          "El 62% de las madres y padres se sintió solo o aislado después de tener un bebé.",
+          "En Reino Unido, el 62% de las madres y padres se sintió solo o aislado al menos parte del tiempo después de tener un bebé.",
       },
       saturada: {
         label: "Saturada",
@@ -112,7 +112,7 @@ const TEXT: Record<Locale, { moods: Record<string, MoodText>; card: FeelingsCont
         description:
           "A guided space to turn down the noise, get your energy back and come home to yourself. A mindful pause to recharge body and mind.",
         insight:
-          "1 in 8 mothers and fathers said they always felt lonely after having a baby. You don't have to carry it all alone.",
+          "In the UK, nearly 1 in 8 mothers and fathers said they always felt lonely after having a baby. You don't have to carry it all alone.",
       },
       sola: {
         label: "Lonely",
@@ -120,7 +120,7 @@ const TEXT: Record<Locale, { moods: Record<string, MoodText>; card: FeelingsCont
         description:
           "No agenda. No pressure. Just real conversations with mothers who probably feel the way you do.",
         insight:
-          "62% of mothers and fathers felt lonely or isolated after having a baby.",
+          "In the UK, 62% of mothers and fathers felt lonely or isolated at least some of the time after having a baby.",
       },
       saturada: {
         label: "Overwhelmed",
