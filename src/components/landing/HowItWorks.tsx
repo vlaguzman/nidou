@@ -1,8 +1,11 @@
-import { howItWorks } from "@/data/howItWorks";
+import { getHowItWorks } from "@/data/howItWorks";
 import { sectionIds } from "@/data/site";
+import type { Locale } from "@/i18n/config";
 import { Reveal } from "./Reveal";
 
-export function HowItWorks() {
+export function HowItWorks({ lang }: { lang: Locale }) {
+  const howItWorks = getHowItWorks(lang);
+
   return (
     <section id={sectionIds.comoFunciona} className="bg-background py-18 sm:py-24">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">

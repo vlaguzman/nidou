@@ -1,18 +1,21 @@
-import { values, valuesHeading } from "@/data/values";
+import { getValues } from "@/data/values";
+import type { Locale } from "@/i18n/config";
 import { Reveal } from "./Reveal";
 
-export function ValuesSection() {
+export function ValuesSection({ lang }: { lang: Locale }) {
+  const { heading, items } = getValues(lang);
+
   return (
     <section className="bg-background py-18 sm:py-24">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <Reveal>
           <h2 className="mx-auto max-w-2xl text-balance text-center font-heading text-3xl leading-tight text-foreground sm:text-4xl">
-            {valuesHeading}
+            {heading}
           </h2>
         </Reveal>
 
         <div className="mt-14 grid gap-14 sm:grid-cols-3 sm:gap-10">
-          {values.map(({ icon: Icon, title, text }, i) => (
+          {items.map(({ icon: Icon, title, text }, i) => (
             <Reveal key={title} delay={i * 140} className="text-center">
               <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-secondary/15 text-secondary">
                 <Icon className="h-7 w-7" strokeWidth={1.5} aria-hidden />

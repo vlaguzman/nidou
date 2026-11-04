@@ -1,26 +1,37 @@
 import { describe, expect, it } from "vitest";
-import { footer, headerCta, mobileMenu, navLinks, sectionIds, siteMetadata } from "./site";
+import { shape } from "@/test/shape";
+import { getSite, sectionIds } from "./site";
 
-const internalAnchors = () =>
-  [
-    ...navLinks,
-    headerCta,
-    ...footer.columns.flatMap((column) => column.links),
-  ]
+const LOCALES = ["es", "en"] as const;
+
+const internalAnchors = (lang: (typeof LOCALES)[number]) => {
+  const { navLinks, headerCta, footer } = getSite(lang);
+  return [...navLinks, headerCta, ...footer.columns.flatMap((column) => column.links)]
     .map((link) => link.href)
     .filter((href) => href.length > 1 && href.startsWith("#"));
+};
 
 describe("site data", () => {
-  it("exposes Spanish metadata for the page", () => {
-    expect(siteMetadata.title).toContain("NIDOU");
-    expect(siteMetadata.description.length).toBeGreaterThan(40);
+  it("exposes metadata for the page in each locale", () => {
+    for (const lang of LOCALES) {
+      const { metadata } = getSite(lang);
+      expect(metadata.title).toContain("NIDOU");
+      expect(metadata.description.length).toBeGreaterThan(40);
+    }
+    expect(getSite("es").metadata.description).toMatch(/^NIDOU es un espacio/);
+    expect(getSite("en").metadata.description).toMatch(/^NIDOU is a space/);
   });
 
   it("only links to anchors that exist as section ids", () => {
     const known = Object.values(sectionIds).map((id) => `#${id}`);
-    for (const href of internalAnchors()) {
-      expect(known).toContain(href);
+    for (const lang of LOCALES) {
+      for (const href of internalAnchors(lang)) expect(known).toContain(href);
     }
+  });
+
+  it("keeps the Spanish anchor ids for both locales", () => {
+    expect(sectionIds.comoFunciona).toBe("como-funciona");
+    expect(getSite("en").navLinks[0].href).toBe("#como-funciona");
   });
 
   it("has unique section ids", () => {
@@ -28,13 +39,27 @@ describe("site data", () => {
     expect(new Set(ids).size).toBe(ids.length);
   });
 
-  it("has Spanish labels for the mobile menu", () => {
-    expect(mobileMenu.openLabel).toBe("Abrir menú");
-    expect(mobileMenu.closeLabel).toBe("Cerrar menú");
-    expect(mobileMenu.navLabel.length).toBeGreaterThan(3);
+  it("has labels for the mobile menu", () => {
+    expect(getSite("es").mobileMenu.openLabel).toBe("Abrir menú");
+    expect(getSite("es").mobileMenu.closeLabel).toBe("Cerrar menú");
+    expect(getSite("en").mobileMenu.openLabel).toBe("Open menu");
+    expect(getSite("en").mobileMenu.closeLabel).toBe("Close menu");
+    for (const lang of LOCALES) expect(getSite(lang).mobileMenu.navLabel.length).toBeGreaterThan(3);
   });
 
-  it("has a contact email", () => {
-    expect(footer.email).toMatch(/^[^@\s]+@[^@\s]+\.[^@\s]+$/);
+  it("labels the language switcher in the page language", () => {
+    expect(getSite("es").languageLabel).toBe("Idioma");
+    expect(getSite("en").languageLabel).toBe("Language");
+  });
+
+  it("has a contact email shared by both locales", () => {
+    for (const lang of LOCALES) {
+      expect(getSite(lang).footer.email).toMatch(/^[^@\s]+@[^@\s]+\.[^@\s]+$/);
+    }
+    expect(getSite("en").footer.email).toBe(getSite("es").footer.email);
+  });
+
+  it("has the same shape in both locales", () => {
+    expect(shape(getSite("en"))).toEqual(shape(getSite("es")));
   });
 });

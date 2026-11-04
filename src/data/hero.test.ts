@@ -1,29 +1,46 @@
 import { describe, expect, it } from "vitest";
-import { hero } from "./hero";
+import { shape } from "@/test/shape";
+import { getHero } from "./hero";
 import { sectionIds } from "./site";
 
 describe("hero data", () => {
   it("has the headline in two parts", () => {
-    expect(hero.headline.lead).toBe("La maternidad nos transforma.");
-    expect(hero.headline.accent).toBe("La comunidad nos sostiene.");
+    const es = getHero("es");
+    expect(es.headline.lead).toBe("La maternidad nos transforma.");
+    expect(es.headline.accent).toBe("La comunidad nos sostiene.");
+    const en = getHero("en");
+    expect(en.headline.lead).toBe("Motherhood transforms us.");
+    expect(en.headline.accent).toBe("Community holds us.");
   });
 
   it("has no eyebrow or description", () => {
-    expect(hero).not.toHaveProperty("eyebrow");
-    expect(hero).not.toHaveProperty("description");
+    expect(getHero("es")).not.toHaveProperty("eyebrow");
+    expect(getHero("es")).not.toHaveProperty("description");
   });
 
   it("labels the secondary CTA", () => {
-    expect(hero.secondaryCta.label).toBe("Descubre Nidou.");
+    expect(getHero("es").secondaryCta.label).toBe("Descubre Nidou.");
+    expect(getHero("en").secondaryCta.label).toBe("Discover Nidou.");
   });
 
-  it("points both CTAs to existing sections", () => {
-    expect(hero.primaryCta.href).toBe(`#${sectionIds.unete}`);
-    expect(hero.secondaryCta.href).toBe(`#${sectionIds.comoFunciona}`);
+  it("points both CTAs to existing sections in every locale", () => {
+    for (const lang of ["es", "en"] as const) {
+      const hero = getHero(lang);
+      expect(hero.primaryCta.href).toBe(`#${sectionIds.unete}`);
+      expect(hero.secondaryCta.href).toBe(`#${sectionIds.comoFunciona}`);
+    }
   });
 
   it("describes the hero image", () => {
-    expect(hero.image.src).toMatch(/^\/images\/.+\.webp$/);
-    expect(hero.image.alt.length).toBeGreaterThan(10);
+    for (const lang of ["es", "en"] as const) {
+      const { image } = getHero(lang);
+      expect(image.src).toMatch(/^\/images\/.+\.webp$/);
+      expect(image.alt.length).toBeGreaterThan(10);
+    }
+    expect(getHero("en").image.src).toBe(getHero("es").image.src);
+  });
+
+  it("has the same shape in both locales", () => {
+    expect(shape(getHero("en"))).toEqual(shape(getHero("es")));
   });
 });

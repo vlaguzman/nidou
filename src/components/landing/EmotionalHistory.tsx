@@ -1,4 +1,5 @@
-import { emotionalHistory, moodScale, moodTimeline } from "@/data/emotionalHistory";
+import { getEmotionalHistory } from "@/data/emotionalHistory";
+import type { Locale } from "@/i18n/config";
 import { Eyebrow } from "./Eyebrow";
 import { Reveal } from "./Reveal";
 
@@ -9,14 +10,16 @@ const CHART_H = 230;
 const BADGE_HALF_MAX = 28;
 const MAX_OFFSET = 150;
 const centerFor = (level: number) => BADGE_HALF_MAX + ((4 - level) / 4) * MAX_OFFSET;
-const xPercent = (i: number) => ((i + 0.5) / moodTimeline.length) * 100;
+const xPercentOf = (i: number, count: number) => ((i + 0.5) / count) * 100;
 
-const linePoints = moodTimeline
-  .map((p, i) => `${(xPercent(i) * 10).toFixed(1)},${centerFor(p.level).toFixed(1)}`)
-  .join(" ");
-
-export function EmotionalHistory() {
+export function EmotionalHistory({ lang }: { lang: Locale }) {
+  const emotionalHistory = getEmotionalHistory(lang);
+  const { moodScale, moodTimeline } = emotionalHistory;
   const [lead, detail] = emotionalHistory.paragraphs;
+  const xPercent = (i: number) => xPercentOf(i, moodTimeline.length);
+  const linePoints = moodTimeline
+    .map((p, i) => `${(xPercent(i) * 10).toFixed(1)},${centerFor(p.level).toFixed(1)}`)
+    .join(" ");
 
   return (
     <section className="bg-muted/40 py-18 sm:py-24">

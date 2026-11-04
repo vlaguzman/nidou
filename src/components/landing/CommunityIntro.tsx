@@ -1,8 +1,11 @@
 import Image from "next/image";
-import { communityIntro } from "@/data/communityIntro";
+import { getCommunityIntro } from "@/data/communityIntro";
+import type { Locale } from "@/i18n/config";
 import { Reveal } from "./Reveal";
 
-export function CommunityIntro() {
+export function CommunityIntro({ lang }: { lang: Locale }) {
+  const communityIntro = getCommunityIntro(lang);
+
   return (
     <section className="bg-secondary/10 py-16 sm:py-20">
       <div className="mx-auto max-w-3xl px-5 text-center sm:px-8">

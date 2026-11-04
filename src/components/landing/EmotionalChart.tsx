@@ -1,18 +1,19 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { chart } from "@/data/wellbeing";
 import { CHART, areaPath, buildPoints, smoothPath } from "@/lib/chart";
 
-const points = buildPoints(chart.values);
-const line = smoothPath(points);
-const area = areaPath(points);
-const last = points[points.length - 1];
+type ChartContent = { title: string; range: string; ariaLabel: string; values: number[]; labels: string[] };
+
 const gridLines = [0.25, 0.5, 0.75].map(
   (g) => CHART.padY + (CHART.height - CHART.padY * 2) * g,
 );
 
-export function EmotionalChart() {
+export function EmotionalChart({ chart }: { chart: ChartContent }) {
+  const points = buildPoints(chart.values);
+  const line = smoothPath(points);
+  const area = areaPath(points);
+  const last = points[points.length - 1];
   const ref = useRef<SVGSVGElement>(null);
   // The server (and no-JS) markup is the finished chart. The hidden state is
   // only armed on the client when it can be drawn in again.

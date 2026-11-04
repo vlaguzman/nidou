@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { defaultMoodId, feelingCard, moods } from "@/data/feelings";
+import type { FeelingsContent } from "@/data/feelings";
 
 const faceBase =
   "rounded-3xl border border-border/70 bg-card p-7 shadow-[0_24px_60px_-30px_rgba(46,54,61,0.35)] [backface-visibility:hidden]";
 
-export function FeelingCard() {
+export function FeelingCard({ content }: { content: FeelingsContent }) {
+  const { moods, defaultMoodId, card: feelingCard } = content;
   const [selectedId, setSelectedId] = useState(defaultMoodId);
   const [flipped, setFlipped] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
