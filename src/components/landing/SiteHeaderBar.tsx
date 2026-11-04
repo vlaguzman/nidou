@@ -124,7 +124,7 @@ export function SiteHeaderBar({ lang, homeHref, content }: Props) {
             ))}
           </ul>
           <div className="mx-auto max-w-6xl border-t border-border/70 py-3">
-            <LanguageSwitcher lang={lang} path="/" label={languageLabel} />
+            <LanguageSwitcher lang={lang} path="/" label={languageLabel} onNavigate={() => setMenuOpen(false)} />
           </div>
         </nav>
       )}

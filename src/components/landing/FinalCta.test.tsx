@@ -58,10 +58,10 @@ describe("FinalCta", () => {
 describe("FinalCta in English", () => {
   it("renders the English copy and confirmation", () => {
     render(<FinalCta lang="en" />);
-    expect(screen.getByRole("heading", { name: "Your refuge can begin right here, too." })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Your refuge can start here, too." })).toBeInTheDocument();
     fireEvent.change(screen.getByLabelText("Your email address"), { target: { value: "ana@example.com" } });
     fireEvent.submit(screen.getByRole("button", { name: "Join the community" }).closest("form")!);
-    expect(screen.getByText(/Thank you for your interest/)).toBeInTheDocument();
+    expect(screen.getByText(/Thanks for your interest/)).toBeInTheDocument();
   });
 
   it("keeps the same section anchor in both locales", () => {

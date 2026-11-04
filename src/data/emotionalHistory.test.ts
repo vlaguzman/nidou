@@ -10,7 +10,7 @@ describe("emotionalHistory data", () => {
     expect(moodScale[4].mood).toBe("Luminoso");
     const en = getEmotionalHistory("en").moodScale;
     expect(en[0].mood).toBe("Stormy");
-    expect(en[4].mood).toBe("Radiant");
+    expect(en[4].mood).toBe("Sunny");
   });
 
   it("resolves every timeline entry to a mood of the scale", () => {

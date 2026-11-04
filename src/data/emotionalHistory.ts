@@ -54,16 +54,16 @@ const TEXT: Record<Locale, Text> = {
   en: {
     eyebrow: "Self-awareness",
     heading: "Your emotional story",
-    quote: "It is not about always being okay, but about noticing how you are.",
+    quote: "It's not about always being okay. It's about noticing how you are.",
     paragraphs: [
-      "Over time, every mother can spot patterns, recognise the hardest moments and see which experiences help her feel better.",
-      "It is not a clinical analysis. It is a gentle way of getting to know yourself better and of reminding yourself, on the hard days, how far you have already come.",
+      "Over time, you can spot patterns, recognize your hardest moments and see which experiences help you feel better.",
+      "It isn't a clinical assessment. It's a gentle way to know yourself better and to remember, on the hard days, how far you've already come.",
     ],
     card: {
       title: "Your emotional log",
       subtitle: "A look at your journey, with no pressure.",
     },
-    moods: ["Stormy", "Rainy", "Cloudy", "Clearing up", "Radiant"],
+    moods: ["Stormy", "Rainy", "Cloudy", "Clearing up", "Sunny"],
     dates: ["May 2", "May 9", "May 16", "May 23", "May 30", "Jun 6"],
   },
 };

@@ -15,7 +15,7 @@ describe("communityIntro data", () => {
     expect(getCommunityIntro("es").statement).toMatch(/^es una comunidad/);
     expect(getCommunityIntro("es").supporting).toMatch(/^No solo importa/);
     expect(getCommunityIntro("en").statement).toMatch(/^is a community/);
-    expect(getCommunityIntro("en").supporting).toMatch(/^It is not only/);
+    expect(getCommunityIntro("en").supporting).toMatch(/^How we feel today matters/);
   });
 
   it("has the same shape in both locales", () => {

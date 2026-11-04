@@ -196,4 +196,13 @@ describe("SiteHeader language switcher", () => {
     expect(within(menu).getByRole("navigation", { name: "Idioma" })).toBeInTheDocument();
     expect(within(menu).getByRole("link", { name: "English" })).toHaveAttribute("href", "/en");
   });
+
+  it("closes the mobile menu when a language link inside it is used", () => {
+    render(<SiteHeader lang="es" />);
+    fireEvent.click(screen.getByRole("button", { name: mobileMenu.openLabel }));
+    const menu = screen.getByRole("navigation", { name: mobileMenu.navLabel });
+    fireEvent.click(within(menu).getByRole("link", { name: "English" }));
+    expect(screen.queryByRole("navigation", { name: mobileMenu.navLabel })).toBeNull();
+    expect(screen.getByRole("button", { name: mobileMenu.openLabel })).toHaveAttribute("aria-expanded", "false");
+  });
 });

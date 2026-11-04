@@ -34,8 +34,7 @@ const anchor = (label: string, id: string): Link => ({ label, href: `#${id}` });
 
 // Locale-neutral values are defined once; only text differs per locale.
 const EMAIL = "hola@nidou.com";
-// Placeholder: replace with the real Instagram profile URL.
-const INSTAGRAM_HREF = "#";
+export const INSTAGRAM_HREF = "https://www.instagram.com/nidou.family";
 // Placeholder: there is no "about" page yet.
 const ABOUT_HREF = "#";
 
@@ -88,7 +87,7 @@ const SITE: Record<Locale, SiteContent> = {
     metadata: {
       title: "NIDOU — Motherhood, lived together",
       description:
-        "NIDOU is a space to connect with mothers going through moments like yours, share experiences and discover how your emotional wellbeing evolves over time.",
+        "NIDOU is a space to connect with mothers going through moments like yours, share experiences and see how your emotional wellbeing changes over time.",
     },
     header: { homeLabel: "NIDOU, home", navLabel: "Main" },
     navLinks: [
@@ -102,7 +101,7 @@ const SITE: Record<Locale, SiteContent> = {
     languageLabel: "Language",
     footer: {
       tagline:
-        "Motherhood, lived together. A space to feel supported and to take care of your emotions.",
+        "Motherhood, lived together. A space to feel supported and to look after your emotions.",
       columns: [
         {
           title: "Community",

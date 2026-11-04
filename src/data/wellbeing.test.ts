@@ -25,7 +25,7 @@ describe("wellbeing data", () => {
 
   it("has section copy", () => {
     expect(getWellbeing("es").heading).toBe("Tu bienestar también merece un seguimiento.");
-    expect(getWellbeing("en").heading).toBe("Your wellbeing deserves a little follow-up too.");
+    expect(getWellbeing("en").heading).toBe("Your wellbeing deserves some attention too.");
     expect(getWellbeing("es").paragraphs).toHaveLength(2);
     expect(getWellbeing("en").paragraphs).toHaveLength(2);
   });

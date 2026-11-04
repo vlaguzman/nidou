@@ -30,6 +30,15 @@ describe("SiteFooter", () => {
     expect(screen.getByRole("link", { name: "Síguenos en Instagram" })).toBeInTheDocument();
   });
 
+  it("opens the Instagram profile in a new tab without leaking the opener", () => {
+    render(<SiteFooter lang="es" />);
+    const link = screen.getByRole("link", { name: "Síguenos en Instagram" });
+    expect(link).toHaveAttribute("href", "https://www.instagram.com/nidou.family");
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
+    expect(screen.getByRole("link", { name: "Escríbenos un correo" })).not.toHaveAttribute("target");
+  });
+
   it("shows the current year", () => {
     render(<SiteFooter lang="es" />);
     expect(screen.getByText(new RegExp(`© ${new Date().getFullYear()} NIDOU`))).toBeInTheDocument();

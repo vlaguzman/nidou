@@ -29,22 +29,22 @@ const VALUES: Record<Locale, ValuesContent> = {
     ],
   },
   en: {
-    heading: "Because taking care of yourself is also taking care of the people you love most.",
+    heading: "Because looking after yourself is also looking after the people you love most.",
     items: [
       {
         icon: Ear,
         title: "Listen to yourself",
-        text: "Before each gathering, you can note how you are feeling.",
+        text: "Before each gathering, you can check in with how you're feeling.",
       },
       {
         icon: Users,
         title: "Connect",
-        text: "Meet mothers with stories and moments like your own.",
+        text: "Meet mothers whose stories and moments feel like yours.",
       },
       {
         icon: Sprout,
         title: "Grow",
-        text: "See how your wellbeing changes as time goes by.",
+        text: "See how your wellbeing shifts over time.",
       },
     ],
   },

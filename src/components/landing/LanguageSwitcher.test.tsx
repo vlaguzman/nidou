@@ -1,5 +1,6 @@
-import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { renderToString } from "react-dom/server";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 
 describe("LanguageSwitcher", () => {
@@ -49,5 +50,47 @@ describe("LanguageSwitcher", () => {
     expect(en).toHaveAttribute("hreflang", "en");
     expect(es).toHaveAttribute("lang", "es");
     expect(es).toHaveAttribute("hreflang", "es");
+  });
+
+  describe("keeping the reader's section", () => {
+    afterEach(() => {
+      window.location.hash = "";
+    });
+
+    it("renders hash-free hrefs first, so the server markup never differs from the client's", () => {
+      window.location.hash = "#bienestar";
+      const html = renderToString(<LanguageSwitcher lang="es" path="/" label="Idioma" />);
+      expect(html).toContain('href="/en"');
+      expect(html).not.toContain("#bienestar");
+    });
+
+    it("carries the current hash over to the other language after mount", () => {
+      window.location.hash = "#bienestar";
+      render(<LanguageSwitcher lang="es" path="/" label="Idioma" />);
+      expect(screen.getByRole("link", { name: "English" })).toHaveAttribute("href", "/en#bienestar");
+      expect(screen.getByRole("link", { name: "Español" })).toHaveAttribute("href", "/es#bienestar");
+    });
+
+    it("follows the hash as the reader moves between sections", () => {
+      render(<LanguageSwitcher lang="es" path="/" label="Idioma" />);
+      expect(screen.getByRole("link", { name: "English" })).toHaveAttribute("href", "/en");
+      act(() => {
+        window.location.hash = "#historias";
+        window.dispatchEvent(new HashChangeEvent("hashchange"));
+      });
+      expect(screen.getByRole("link", { name: "English" })).toHaveAttribute("href", "/en#historias");
+      act(() => {
+        window.location.hash = "";
+        window.dispatchEvent(new HashChangeEvent("hashchange"));
+      });
+      expect(screen.getByRole("link", { name: "English" })).toHaveAttribute("href", "/en");
+    });
+  });
+
+  it("tells its parent when a language link is used", () => {
+    const onNavigate = vi.fn();
+    render(<LanguageSwitcher lang="es" path="/" label="Idioma" onNavigate={onNavigate} />);
+    fireEvent.click(screen.getByRole("link", { name: "English" }));
+    expect(onNavigate).toHaveBeenCalledTimes(1);
   });
 });

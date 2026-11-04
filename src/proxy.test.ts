@@ -2,10 +2,11 @@ import { NextRequest } from "next/server";
 import { describe, expect, it } from "vitest";
 import { config, proxy } from "./proxy";
 
-function request(path: string, acceptLanguage?: string) {
-  return new NextRequest(`http://localhost:3001${path}`, {
-    headers: acceptLanguage ? { "accept-language": acceptLanguage } : {},
-  });
+function request(path: string, acceptLanguage?: string, cookie?: string) {
+  const headers: Record<string, string> = {};
+  if (acceptLanguage) headers["accept-language"] = acceptLanguage;
+  if (cookie) headers.cookie = cookie;
+  return new NextRequest(`http://localhost:3001${path}`, { headers });
 }
 
 describe("proxy", () => {
@@ -24,6 +25,37 @@ describe("proxy", () => {
     const response = proxy(request("/en/journey", "es"));
     expect(response.headers.get("location")).toBeNull();
     expect(response.headers.get("x-middleware-next")).toBe("1");
+  });
+});
+
+describe("proxy locale cookie", () => {
+  it("remembers the locale of a prefixed request for a year", () => {
+    const cookie = proxy(request("/en", "es")).cookies.get("NEXT_LOCALE");
+    expect(cookie).toMatchObject({ value: "en", path: "/", maxAge: 31536000, sameSite: "lax" });
+  });
+
+  it("updates the cookie when the reader switches language", () => {
+    const response = proxy(request("/es/journey", "en", "NEXT_LOCALE=en"));
+    expect(response.cookies.get("NEXT_LOCALE")?.value).toBe("es");
+  });
+
+  it("does not resend the cookie when it already holds the same language", () => {
+    expect(proxy(request("/es", "en", "NEXT_LOCALE=es")).cookies.get("NEXT_LOCALE")).toBeUndefined();
+  });
+
+  it("sends a returning reader to the remembered language, not the browser's", () => {
+    const response = proxy(request("/", "en-US,en;q=0.9", "NEXT_LOCALE=es"));
+    expect(response.status).toBe(307);
+    expect(response.headers.get("location")).toBe("http://localhost:3001/es");
+  });
+
+  it("ignores an invalid cookie and falls back to Accept-Language", () => {
+    const response = proxy(request("/", "en", "NEXT_LOCALE=fr"));
+    expect(response.headers.get("location")).toBe("http://localhost:3001/en");
+  });
+
+  it("does not set a cookie on the redirect itself (only a confirmed choice is remembered)", () => {
+    expect(proxy(request("/", "en")).cookies.get("NEXT_LOCALE")).toBeUndefined();
   });
 });
 

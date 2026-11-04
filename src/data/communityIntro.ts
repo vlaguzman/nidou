@@ -19,9 +19,9 @@ const COMMUNITY_INTRO: Record<Locale, CommunityIntroContent> = {
   en: {
     logo: LOGO,
     statement:
-      "is a community where we meet, share and walk beside each other as our emotions change through motherhood.",
+      "is a community where we meet, share and keep each other company as our emotions shift through motherhood.",
     supporting:
-      "It is not only how we feel today that matters, but also how we change along the way.",
+      "How we feel today matters. So does how we change along the way.",
   },
 };
 

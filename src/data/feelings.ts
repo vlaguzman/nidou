@@ -91,31 +91,31 @@ const TEXT: Record<Locale, { moods: Record<string, MoodText>; card: FeelingsCont
         label: "Exhausted",
         title: "Shared presence",
         description:
-          "A guided space to switch off the noise, regain your energy and come back to yourself. A mindful pause to recharge body and mind.",
+          "A guided space to turn down the noise, get your energy back and come home to yourself. A mindful pause to recharge body and mind.",
       },
       sola: {
         label: "Lonely",
-        title: "Shall we grab a coffee?",
+        title: "Want to grab a coffee?",
         description:
-          "No agenda. No pressure. Just real conversations with moms who probably feel the same way you do.",
+          "No agenda. No pressure. Just real conversations with mothers who probably feel the way you do.",
       },
       saturada: {
         label: "Overwhelmed",
         title: "Date with the artist",
         description:
-          "A space to explore your creativity, play with your hands and clear your mind while you make something just for you.",
+          "A space to get creative, play with your hands and clear your head while you make something just for you.",
       },
       conectada: {
         label: "Connected",
         title: "Creativity in community",
         description:
-          "You are in a great moment to boost your creativity. Come create, share and get inspired alongside other women.",
+          "You're in a good place to dive into your creativity. Come make things, share and get inspired alongside other women.",
       },
       esperanzada: {
         label: "Hopeful",
         title: "Entrepreneurship 1.0",
         description:
-          "Let's channel that energy into action. Let's start building the idea that has been waiting to come out.",
+          "Let's turn that energy into action and start building the idea that's been waiting to come out.",
       },
     },
     card: {
