@@ -25,8 +25,6 @@ export const moods: Mood[] = [
     tone: "warm",
     emoji: "☕",
     title: "¿Nos tomamos un café?",
-    joinHref:
-      "https://docs.google.com/forms/d/e/1FAIpQLSetgdHB1sEZDFp6GFSCGwF3d9zb43YxrrIwIEHou5MuWzPdWg/viewform?usp=header",
     description:
       "No hay agenda. No hay presión. Solo conversaciones reales con mamás que probablemente sienten lo mismo que tú.",
   },
@@ -36,6 +34,8 @@ export const moods: Mood[] = [
     tone: "warm",
     emoji: "🎨",
     title: "Cita con el artista",
+    joinHref:
+      "https://docs.google.com/forms/d/e/1FAIpQLSetgdHB1sEZDFp6GFSCGwF3d9zb43YxrrIwIEHou5MuWzPdWg/viewform?usp=header",
     description:
       "Un espacio para explorar tu creatividad, jugar con las manos y despejar la mente mientras haces algo solo para ti.",
   },

@@ -24,9 +24,9 @@ describe("feelings data", () => {
     expect(t.conectada).toBe("Creatividad en comunidad");
   });
 
-  it("only the sola mood has a join link (Google Form)", () => {
+  it("only the saturada mood has a join link (Google Form)", () => {
     const withHref = moods.filter((m) => m.joinHref);
-    expect(withHref.map((m) => m.id)).toEqual(["sola"]);
+    expect(withHref.map((m) => m.id)).toEqual(["saturada"]);
     expect(withHref[0].joinHref).toBe(
       "https://docs.google.com/forms/d/e/1FAIpQLSetgdHB1sEZDFp6GFSCGwF3d9zb43YxrrIwIEHou5MuWzPdWg/viewform?usp=header",
     );

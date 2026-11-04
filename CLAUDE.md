@@ -33,4 +33,4 @@ Single-page, Spanish-only landing for NIDOU (motherhood community + emotional we
 ## Known placeholders
 
 - `FinalCta` email form only flips local state and discards the email; there is no backend yet (the confirmation copy says so honestly).
-- `href="#"` in the footer ("Sobre nosotras", Instagram) has no destination yet. The "Me sumo al siguiente" button in `FeelingCard` only links somewhere for the "Sola" mood (a Google Form, via `joinHref`); the other moods still render a placeholder button with no destination.
+- `href="#"` in the footer ("Sobre nosotras", Instagram) has no destination yet. The "Me sumo al siguiente" button in `FeelingCard` only links somewhere for the "Saturada" mood ("Cita con el artista") (a Google Form, via `joinHref`); the other moods still render a placeholder button with no destination.
