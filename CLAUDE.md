@@ -29,7 +29,7 @@ Single-page, bilingual (Spanish/English) landing for NIDOU (motherhood community
 - Server sections take a `lang: Locale` prop and call the getters. Client components (`SiteHeaderBar`, `FeelingCard`, `EmotionalChart`, `TestimonialList`, `FinalCtaForm`) receive their content via props from a server parent and must not import data modules (type-only imports are fine). Sections that need client state are a server wrapper plus a client child (e.g. `Testimonials` + `TestimonialList`).
 - The layout sets `<html lang>`, has `dynamicParams = false` and per-locale `generateMetadata` (title/description). There is no `metadataBase` or hreflang `alternates` yet because the site has no production URL; add both (`alternatesFor`) when it does.
 - `LanguageSwitcher` takes `lang`, `path` and the `label` (`languageLabel` in site data); it links `/` to `/es` and `/en` with `next/link`.
-- After moving routes, delete the stale generated `.next` directory before `npm run typecheck`.
+- `typecheck` runs `next typegen` first: the `[lang]` layout and page use the global `LayoutProps`/`PageProps` route types, which only exist after Next generates them (a clean CI checkout has no `.next`).
 
 ## Conventions
 
