@@ -64,6 +64,7 @@ export function alternatesFor(lang: Locale, path: string): NonNullable<Metadata[
     languages: {
       en: localePath("en", path),
       es: localePath("es", path),
+      // Intentionally the default-locale page, not the redirecting unprefixed "/".
       "x-default": localePath(DEFAULT_LOCALE, path),
     },
   };

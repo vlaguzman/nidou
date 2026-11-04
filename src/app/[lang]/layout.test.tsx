@@ -43,6 +43,22 @@ describe("layout metadata", () => {
     });
   });
 
+  it("resolves URLs against the production domain", async () => {
+    const metadata = await layoutModule.generateMetadata(params("es"));
+    expect(String(metadata.metadataBase)).toBe("https://nidou.co.uk/");
+  });
+
+  it("declares the canonical URL and hreflang alternates for each locale", async () => {
+    expect((await layoutModule.generateMetadata(params("es"))).alternates).toEqual({
+      canonical: "/es",
+      languages: { en: "/en", es: "/es", "x-default": "/es" },
+    });
+    expect((await layoutModule.generateMetadata(params("en"))).alternates).toEqual({
+      canonical: "/en",
+      languages: { en: "/en", es: "/es", "x-default": "/es" },
+    });
+  });
+
   it("returns no metadata for an unsupported locale", async () => {
     expect(await layoutModule.generateMetadata(params("fr"))).toEqual({});
   });

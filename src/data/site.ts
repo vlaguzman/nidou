@@ -1,5 +1,8 @@
 import type { Locale } from "@/i18n/config";
 
+// Production origin: metadata (canonical, hreflang) resolves its relative URLs against it.
+export const SITE_URL = "https://nidou.co.uk";
+
 // Section anchors are locale-neutral: both languages share the same Spanish ids.
 export const sectionIds = {
   inicio: "inicio",
