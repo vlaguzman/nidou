@@ -21,6 +21,49 @@ describe("FeelingCard", () => {
     expect(screen.getByRole("button", { name: "Sola" })).toHaveAttribute("aria-pressed", "false");
   });
 
+  it("no longer shows the fixed weekly insight line on the front", () => {
+    render(<FeelingCard content={feelings} />);
+    expect(screen.queryByText(/Esta semana muchas madres/)).toBeNull();
+  });
+
+  it("shows each mood's own insight on the back, with its source when present", () => {
+    for (const mood of moods) {
+      const { unmount } = render(<FeelingCard content={feelings} />);
+      fireEvent.click(screen.getByRole("button", { name: mood.label }));
+      expect(screen.getByText(mood.insight.text)).toBeInTheDocument();
+      if (mood.insight.source) {
+        expect(screen.getByText(`Fuente: ${mood.insight.source}`)).toBeInTheDocument();
+      } else {
+        expect(screen.queryByText(/Fuente:/)).toBeNull();
+      }
+      unmount();
+    }
+  });
+
+  it("keeps the insight inside the inert back face until flipped", () => {
+    const { container } = render(<FeelingCard content={feelings} />);
+    const back = container.querySelector('[data-face="back"]')!;
+    expect(back).toHaveAttribute("inert");
+    expect(back).toHaveTextContent(moods.find((m) => m.id === "conectada")!.insight.text);
+    expect(container.querySelector('[data-face="front"]')).not.toHaveTextContent(
+      moods.find((m) => m.id === "conectada")!.insight.text,
+    );
+  });
+
+  it("collapses the insight while the front shows, so it does not set the card height", () => {
+    const { container } = render(<FeelingCard content={feelings} />);
+    const insight = container.querySelector("[data-insight]")!;
+    expect(insight).toHaveAttribute("data-state", "closed");
+    expect(insight.className).toContain("grid-rows-[0fr]");
+
+    fireEvent.click(screen.getByRole("button", { name: "Sola" }));
+    expect(insight).toHaveAttribute("data-state", "open");
+    expect(insight.className).toContain("grid-rows-[1fr]");
+
+    fireEvent.click(screen.getByRole("button", { name: /Volver/ }));
+    expect(insight).toHaveAttribute("data-state", "closed");
+  });
+
   it("keeps the suggestion face out of reach until a mood is chosen", () => {
     const { container } = render(<FeelingCard content={feelings} />);
     const faces = container.querySelectorAll("[data-face]");
@@ -90,14 +133,16 @@ describe("FeelingCard", () => {
     expect(document.body).toHaveFocus();
   });
 
-  it("stacks both faces in one grid cell so the card grows with the longest copy", () => {
+  it("sizes the card to the visible face only", () => {
     const { container } = render(<FeelingCard content={feelings} />);
-    const faces = container.querySelectorAll("[data-face]");
-    for (const face of faces) {
-      expect(face).toHaveClass("col-start-1", "row-start-1");
-      expect(face).not.toHaveClass("absolute");
-    }
-    expect(faces[0].parentElement).toHaveClass("grid");
+    const [front, back] = container.querySelectorAll("[data-face]");
+    expect(front.parentElement).toHaveClass("relative");
+    expect(front).not.toHaveClass("absolute");
+    expect(back).toHaveClass("absolute");
+
+    fireEvent.click(screen.getByRole("button", { name: "Sola" }));
+    expect(front).toHaveClass("absolute");
+    expect(back).not.toHaveClass("absolute");
   });
 });
 
@@ -117,5 +162,14 @@ describe("FeelingCard in English", () => {
     const link = screen.getByRole("link", { name: en.card.join });
     expect(link).toHaveAttribute("href", moods.find((m) => m.id === "saturada")!.joinHref);
     expect(screen.getByRole("button", { name: /Back/ })).toBeInTheDocument();
+  });
+
+  it("shows the English insight with a Source line", () => {
+    render(<FeelingCard content={en} />);
+    fireEvent.click(screen.getByRole("button", { name: "Lonely" }));
+    expect(
+      screen.getByText("62% of mothers and fathers felt lonely or isolated after having a baby."),
+    ).toBeInTheDocument();
+    expect(screen.getByText("Source: NCT, 2026")).toBeInTheDocument();
   });
 });

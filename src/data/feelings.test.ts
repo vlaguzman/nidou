@@ -47,6 +47,28 @@ describe("feelings data", () => {
     }
   });
 
+  it("gives every mood its own insight in both locales, with sources only on the stat moods", () => {
+    const sources = {
+      agotada: "NCT, 2026",
+      sola: "NCT, 2026",
+      saturada: "The Lancet Public Health, 2023",
+    } as Record<string, string>;
+    for (const lang of LOCALES) {
+      const { moods, card } = getFeelings(lang);
+      expect(card).not.toHaveProperty("insight");
+      for (const mood of moods) {
+        expect(mood.insight.text.length).toBeGreaterThan(0);
+        expect(mood.insight.source).toBe(sources[mood.id]);
+      }
+      expect(moods.filter((m) => m.tone === "calm").every((m) => m.insight.source === undefined)).toBe(true);
+    }
+    expect(getFeelings("es").card.sourceLabel).toBe("Fuente");
+    expect(getFeelings("en").card.sourceLabel).toBe("Source");
+    expect(getFeelings("es").moods.find((m) => m.id === "sola")?.insight.text).toBe(
+      "El 62% de las madres y padres se sintió solo o aislado después de tener un bebé.",
+    );
+  });
+
   it("has card copy", () => {
     expect(getFeelings("es").card.question).toBe("¿Cómo te sientes hoy?");
     expect(getFeelings("en").card.question).toBe("How are you feeling today?");

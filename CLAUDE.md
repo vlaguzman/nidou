@@ -42,6 +42,11 @@ Single-page, bilingual (Spanish/English) landing for NIDOU (motherhood community
 - `src/app/globals.css` applies to every route: give custom classes specific names and keep Tailwind utilities for everything else.
 - No dark mode, no ESLint/Prettier.
 
+## Mood insights
+
+- Each mood in `src/data/feelings.ts` has an `insight` shown on the back of `FeelingCard` (the old fixed front line is gone). The stats are static, sourced data (NCT 2026; The Lancet Public Health 2023); sources are locale-neutral and rendered with `card.sourceLabel`. Positive moods have no source.
+- `FeelingCard` is as tall as its visible face: the hidden face is `absolute` (inert, backface-hidden), so the card height changes on flip and the hero reflows. The overflowing hidden face is clipped by Hero's `overflow-hidden`; keep it. The insight box unfolds and fades in with the flip (`data-insight`, `grid-rows` 0fr→1fr).
+
 ## Known placeholders
 
 - `FinalCta` email form only flips local state and discards the email; there is no backend yet (the confirmation copy says so honestly).
