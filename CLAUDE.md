@@ -42,6 +42,10 @@ Single-page, bilingual (Spanish/English) landing for NIDOU (motherhood community
 - `src/app/globals.css` applies to every route: give custom classes specific names and keep Tailwind utilities for everything else.
 - No dark mode, no ESLint/Prettier.
 
+## Testimonials carousel
+
+- `TestimonialList` is a dependency-free scroll-snap carousel: 3 cards visible from `md`, one (85% wide) below. It auto-advances one card every 6s and wraps at both ends. It pauses while hovered by a mouse (touch is ignored) or focused and has a pause/play button (WCAG 2.2.2). With `prefers-reduced-motion` it starts paused and scrolls without smoothing. Control labels live in `carousel` in `src/data/testimonials.ts`; the hidden scrollbar is `.testimonial-track` in `globals.css`.
+
 ## Mood insights
 
 - Each mood in `src/data/feelings.ts` has an `insight` shown on the back of `FeelingCard` (the old fixed front line is gone). The stats are static, sourced data (NCT 2026; The Lancet Public Health 2023); sources are locale-neutral and rendered with `card.sourceLabel`. Positive moods have no source.

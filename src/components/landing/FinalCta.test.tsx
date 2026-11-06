@@ -69,6 +69,10 @@ describe("FinalCta", () => {
     const input = screen.getByLabelText("Tu correo electrónico");
     expect(input).toHaveAttribute("name", "email");
     expect(input).toHaveAttribute("autocomplete", "email");
+    // LastPass, 1Password and Bitwarden inject icons next to the field otherwise.
+    expect(input).toHaveAttribute("data-lpignore", "true");
+    expect(input).toHaveAttribute("data-1p-ignore");
+    expect(input).toHaveAttribute("data-bwignore");
   });
 
   it("renders an empty polite live region before submit and fills it on submit", () => {

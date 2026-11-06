@@ -5,6 +5,7 @@ export type Testimonial = { quote: string; name: string; detail: string; collaps
 export type TestimonialsContent = {
   heading: string;
   expand: { more: string; less: string };
+  carousel: { label: string; previous: string; next: string; pause: string; play: string };
   items: Testimonial[];
 };
 
@@ -12,6 +13,13 @@ const TESTIMONIALS: Record<Locale, TestimonialsContent> = {
   es: {
     heading: "Lo que cambia cuando te sientes acompañada",
     expand: { more: "Leer más", less: "Leer menos" },
+    carousel: {
+      label: "Testimonios",
+      previous: "Testimonio anterior",
+      next: "Siguiente testimonio",
+      pause: "Pausar carrusel",
+      play: "Reproducir carrusel",
+    },
     items: [
       {
         quote:
@@ -31,11 +39,24 @@ const TESTIMONIALS: Record<Locale, TestimonialsContent> = {
         name: "Annie",
         detail: "Presencia compartida",
       },
+      {
+        quote:
+          "En Nidou encontré la oportunidad de colaborar con sus redes sociales, y compartir ideas con Adri y proyectarlas juntas ha sido emocionante. Y como mamá, compartir lo que vivimos y aprender unas de otras me hizo sentir apoyada. 💛",
+        name: "Fer",
+        detail: "Compañera de equipo",
+      },
     ],
   },
   en: {
     heading: "What changes when you feel supported",
     expand: { more: "Read more", less: "Read less" },
+    carousel: {
+      label: "Testimonials",
+      previous: "Previous testimonial",
+      next: "Next testimonial",
+      pause: "Pause carousel",
+      play: "Play carousel",
+    },
     items: [
       {
         quote:
@@ -54,6 +75,12 @@ const TESTIMONIALS: Record<Locale, TestimonialsContent> = {
         quote: "I felt I wasn't alone. I felt welcomed and heard.",
         name: "Annie",
         detail: "Shared presence",
+      },
+      {
+        quote:
+          "At Nidou I found the chance to collaborate on its social media, and sharing ideas with Adri and bringing them to life together has been exciting. And as a mom, sharing what we go through and learning from one another made me feel supported. 💛",
+        name: "Fer",
+        detail: "Team partner",
       },
     ],
   },

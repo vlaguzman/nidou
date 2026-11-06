@@ -67,6 +67,10 @@ export function FinalCtaForm({ form, thanks, whatsapp }: Props) {
             id="cta-email"
             name="email"
             autoComplete="email"
+            // Keeps password managers from injecting icons, which breaks hydration.
+            data-lpignore="true"
+            data-1p-ignore
+            data-bwignore
             type="email"
             required
             value={email}
