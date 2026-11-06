@@ -30,7 +30,7 @@ export function FinalCta({ lang }: { lang: Locale }) {
           </p>
         </Reveal>
 
-        <FinalCtaForm form={finalCta.form} thanks={finalCta.thanks} />
+        <FinalCtaForm form={finalCta.form} thanks={finalCta.thanks} whatsapp={finalCta.whatsapp} />
       </div>
     </section>
   );

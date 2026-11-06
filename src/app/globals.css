@@ -69,6 +69,14 @@
   }
 }
 
+/* Testimonials carousel track: swipeable, scrollbar hidden (controls below it). */
+.testimonial-track {
+  scrollbar-width: none;
+}
+.testimonial-track::-webkit-scrollbar {
+  display: none;
+}
+
 /* Scroll reveal (see Reveal.tsx) */
 .reveal {
   opacity: 0;

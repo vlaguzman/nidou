@@ -33,7 +33,8 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
 
   return (
     <html lang={lang} className={`${geist.variable} ${fraunces.variable}`}>
-      <body>{children}</body>
+      {/* Extensions (e.g. ColorZilla) add attributes to <body> before hydration. */}
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }

@@ -42,6 +42,10 @@ Single-page, bilingual (Spanish/English) landing for NIDOU (motherhood community
 - `src/app/globals.css` applies to every route: give custom classes specific names and keep Tailwind utilities for everything else.
 - No dark mode, no ESLint/Prettier.
 
+## Testimonials carousel
+
+- `TestimonialList` is a dependency-free scroll-snap carousel: 3 cards visible from `md`, one (85% wide) below. It auto-advances one card every 6s and wraps at both ends. It pauses while hovered by a mouse (touch is ignored) or focused and has a pause/play button (WCAG 2.2.2). With `prefers-reduced-motion` it starts paused and scrolls without smoothing. Control labels live in `carousel` in `src/data/testimonials.ts`; the hidden scrollbar is `.testimonial-track` in `globals.css`.
+
 ## Mood insights
 
 - Each mood in `src/data/feelings.ts` has an `insight` shown on the back of `FeelingCard` (the old fixed front line is gone). The stats are static, sourced data (NCT 2026; The Lancet Public Health 2023); sources are locale-neutral and rendered with `card.sourceLabel`. Positive moods have no source.
@@ -49,6 +53,7 @@ Single-page, bilingual (Spanish/English) landing for NIDOU (motherhood community
 
 ## Known placeholders
 
-- `FinalCta` email form only flips local state and discards the email; there is no backend yet (the confirmation copy says so honestly).
-- The Google Form behind `joinHref` is a Spanish-language destination for both locales, and the `FinalCta` signup has no backend (the confirmation text is translated, but nothing is collected); only the surrounding UI copy is translated.
-- `href="#"` in the footer ("Sobre nosotras") has no destination yet. Instagram is real (`INSTAGRAM_HREF` in `src/data/site.ts`, opens in a new tab). The "Me sumo al siguiente" button in `FeelingCard` only links somewhere for the "Saturada" mood ("Cita con el artista") (a Google Form, via `joinHref`); the other moods still render a placeholder button with no destination.
+- `FinalCta` email form has no backend: on submit it opens WhatsApp (`wa.me` click-to-chat, built by `src/lib/whatsapp.ts`) to `+44 7950 745207` with a prefilled message containing the email; the visitor still has to tap send, and the confirmation shows a fallback link in case the new tab was blocked. Nothing is collected by the site.
+- The Google Forms (`COMMUNITY_FORM_HREF` in `src/data/site.ts`, and the "Cita con el artista" event form in `src/data/feelings.ts`) are Spanish-language destinations for both locales; only the surrounding UI copy is translated.
+- The Hero "Únete a la comunidad" CTA and the "Me sumo al siguiente" button of every mood without its own event form link to `COMMUNITY_FORM_HREF` (new tab); "Saturada" ("Cita con el artista") keeps its own form. The header/footer "Únete" links still jump to the `#unete` section.
+- `href="#"` in the footer ("Sobre nosotras") has no destination yet. Instagram is real (`INSTAGRAM_HREF` in `src/data/site.ts`, opens in a new tab).

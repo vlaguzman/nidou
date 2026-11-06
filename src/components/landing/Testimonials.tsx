@@ -16,7 +16,11 @@ export function Testimonials({ lang }: { lang: Locale }) {
           </h2>
         </Reveal>
 
-        <TestimonialList items={testimonials.items} expand={testimonials.expand} />
+        <TestimonialList
+          items={testimonials.items}
+          expand={testimonials.expand}
+          carousel={testimonials.carousel}
+        />
       </div>
     </section>
   );

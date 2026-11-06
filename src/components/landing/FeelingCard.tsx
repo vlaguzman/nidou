@@ -130,24 +130,14 @@ export function FeelingCard({ content }: { content: FeelingsContent }) {
           </div>
 
           <div className="mt-auto pt-6">
-            {active.joinHref ? (
-              <a
-                href={active.joinHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full rounded-full bg-primary px-6 py-3 text-center text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-              >
-                {feelingCard.join}
-              </a>
-            ) : (
-              /* Placeholder: no signup flow behind this yet. */
-              <button
-                type="button"
-                className="w-full rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-              >
-                {feelingCard.join}
-              </button>
-            )}
+            <a
+              href={active.joinHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full rounded-full bg-primary px-6 py-3 text-center text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            >
+              {feelingCard.join}
+            </a>
             <button
               type="button"
               onClick={() => setFlipped(false)}

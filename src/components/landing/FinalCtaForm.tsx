@@ -2,13 +2,16 @@
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import type { FinalCtaContent } from "@/data/finalCta";
+import { whatsappHref } from "@/lib/whatsapp";
 import { Reveal } from "./Reveal";
 
-type Props = Pick<FinalCtaContent, "form" | "thanks">;
+type Props = Pick<FinalCtaContent, "form" | "thanks" | "whatsapp">;
 
-export function FinalCtaForm({ form, thanks }: Props) {
+export function FinalCtaForm({ form, thanks, whatsapp }: Props) {
   const [email, setEmail] = useState("");
-  const [sent, setSent] = useState(false);
+  // The WhatsApp link once submitted; doubles as the "sent" state.
+  const [sentHref, setSentHref] = useState<string | null>(null);
+  const sent = sentHref !== null;
   const statusRef = useRef<HTMLParagraphElement>(null);
 
   // The form unmounts on submit, so hand focus to the confirmation message.
@@ -16,10 +19,15 @@ export function FinalCtaForm({ form, thanks }: Props) {
     if (sent) statusRef.current?.focus();
   }, [sent]);
 
-  // No backend yet: submitting only flips local state.
+  // No backend: submitting opens WhatsApp with the email in a prefilled message.
+  // Opened synchronously so it keeps the user gesture and is not popup-blocked.
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    if (email.trim()) setSent(true);
+    const address = email.trim();
+    if (!address) return;
+    const href = whatsappHref(whatsapp.phone, whatsapp.message.replace("{email}", () => address));
+    window.open(href, "_blank", "noopener,noreferrer");
+    setSentHref(href);
   }
 
   return (
@@ -37,6 +45,16 @@ export function FinalCtaForm({ form, thanks }: Props) {
       >
         {sent ? thanks : null}
       </p>
+      {sentHref && (
+        <a
+          href={sentHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-4 inline-block text-sm underline underline-offset-4"
+        >
+          {whatsapp.fallbackLabel}
+        </a>
+      )}
       {!sent && (
         <form
           onSubmit={handleSubmit}
@@ -49,6 +67,10 @@ export function FinalCtaForm({ form, thanks }: Props) {
             id="cta-email"
             name="email"
             autoComplete="email"
+            // Keeps password managers from injecting icons, which breaks hydration.
+            data-lpignore="true"
+            data-1p-ignore
+            data-bwignore
             type="email"
             required
             value={email}

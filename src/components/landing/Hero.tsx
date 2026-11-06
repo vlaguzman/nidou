@@ -36,6 +36,8 @@ export function Hero({ lang }: { lang: Locale }) {
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a
               href={hero.primaryCta.href}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex h-11 items-center justify-center rounded-full bg-primary px-7 text-base font-medium text-primary-foreground transition-colors hover:bg-primary/90"
             >
               {hero.primaryCta.label}
