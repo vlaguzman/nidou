@@ -23,10 +23,10 @@ describe("hero data", () => {
     expect(getHero("en").secondaryCta.label).toBe("Discover Nidou.");
   });
 
-  it("points both CTAs to existing sections in every locale", () => {
+  it("points the primary CTA to the community form and the secondary to a section", () => {
     for (const lang of ["es", "en"] as const) {
       const hero = getHero(lang);
-      expect(hero.primaryCta.href).toBe(`#${sectionIds.unete}`);
+      expect(hero.primaryCta.href).toBe("https://docs.google.com/forms/d/e/1FAIpQLSc5gm7dmLdB6mSSAJpODuWG0phQUaINnxYfgAkG6Y7771pWcQ/viewform");
       expect(hero.secondaryCta.href).toBe(`#${sectionIds.comoFunciona}`);
     }
   });

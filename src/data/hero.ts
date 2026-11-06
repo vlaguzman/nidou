@@ -1,5 +1,5 @@
 import type { Locale } from "@/i18n/config";
-import { sectionIds } from "./site";
+import { COMMUNITY_FORM_HREF, sectionIds } from "./site";
 
 export type HeroContent = {
   headline: { lead: string; accent: string };
@@ -9,7 +9,7 @@ export type HeroContent = {
 };
 
 // Locale-neutral values are defined once; only text differs per locale.
-const PRIMARY_HREF = `#${sectionIds.unete}`;
+const PRIMARY_HREF = COMMUNITY_FORM_HREF;
 const SECONDARY_HREF = `#${sectionIds.comoFunciona}`;
 const IMAGE_SRC = "/images/hero-mothers.webp";
 

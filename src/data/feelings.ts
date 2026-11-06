@@ -1,4 +1,5 @@
 import type { Locale } from "@/i18n/config";
+import { COMMUNITY_FORM_HREF } from "./site";
 
 export type Mood = {
   id: string;
@@ -7,8 +8,8 @@ export type Mood = {
   emoji: string;
   title: string;
   description: string;
-  /** Optional external destination for the "join" button on the back face. */
-  joinHref?: string;
+  /** External destination for the "join" button on the back face. */
+  joinHref: string;
   /** Per-mood stat or note shown on the back face; `source` only for sourced stats. */
   insight: { text: string; source?: string };
 };
@@ -26,9 +27,10 @@ export type FeelingsContent = {
   };
 };
 
-// Locale-neutral: ids, tones, emojis and the signup form link are defined once.
-// The form itself is in Spanish and serves both locales.
-const JOIN_FORM_HREF =
+// Locale-neutral: ids, tones, emojis and the signup form links are defined once.
+// The forms are in Spanish and serve both locales. Moods without their own event
+// form link to the community form.
+const ARTIST_FORM_HREF =
   "https://docs.google.com/forms/d/e/1FAIpQLSetgdHB1sEZDFp6GFSCGwF3d9zb43YxrrIwIEHou5MuWzPdWg/viewform?usp=header";
 
 // Insight stats are static, sourced data (NCT 2026; The Lancet Public Health 2023).
@@ -41,7 +43,7 @@ const MOODS: {
 }[] = [
   { id: "agotada", tone: "warm", emoji: "🧘", source: "NCT, 2026" },
   { id: "sola", tone: "warm", emoji: "☕", source: "NCT, 2026" },
-  { id: "saturada", tone: "warm", emoji: "🎨", joinHref: JOIN_FORM_HREF, source: "The Lancet Public Health, 2023" },
+  { id: "saturada", tone: "warm", emoji: "🎨", joinHref: ARTIST_FORM_HREF, source: "The Lancet Public Health, 2023" },
   { id: "conectada", tone: "calm", emoji: "✨" },
   { id: "esperanzada", tone: "calm", emoji: "🚀" },
 ];
@@ -169,7 +171,7 @@ function build(lang: Locale): FeelingsContent {
         emoji,
         ...text,
         insight: { text: insight, ...(source ? { source } : {}) },
-        ...(joinHref ? { joinHref } : {}),
+        joinHref: joinHref ?? COMMUNITY_FORM_HREF,
       };
     }),
     defaultMoodId: DEFAULT_MOOD_ID,

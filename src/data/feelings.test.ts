@@ -37,13 +37,16 @@ describe("feelings data", () => {
     expect(en.sola).toBe("Want to grab a coffee?");
   });
 
-  it("only the saturada mood has a join link (Google Form), the same in both locales", () => {
+  it("links saturada to its event form and every other mood to the community form", () => {
     for (const lang of LOCALES) {
-      const withHref = getFeelings(lang).moods.filter((m) => m.joinHref);
-      expect(withHref.map((m) => m.id)).toEqual(["saturada"]);
-      expect(withHref[0].joinHref).toBe(
-        "https://docs.google.com/forms/d/e/1FAIpQLSetgdHB1sEZDFp6GFSCGwF3d9zb43YxrrIwIEHou5MuWzPdWg/viewform?usp=header",
-      );
+      const hrefs = Object.fromEntries(getFeelings(lang).moods.map((m) => [m.id, m.joinHref]));
+      expect(hrefs).toEqual({
+        agotada: "https://docs.google.com/forms/d/e/1FAIpQLSc5gm7dmLdB6mSSAJpODuWG0phQUaINnxYfgAkG6Y7771pWcQ/viewform",
+        sola: "https://docs.google.com/forms/d/e/1FAIpQLSc5gm7dmLdB6mSSAJpODuWG0phQUaINnxYfgAkG6Y7771pWcQ/viewform",
+        saturada: "https://docs.google.com/forms/d/e/1FAIpQLSetgdHB1sEZDFp6GFSCGwF3d9zb43YxrrIwIEHou5MuWzPdWg/viewform?usp=header",
+        conectada: "https://docs.google.com/forms/d/e/1FAIpQLSc5gm7dmLdB6mSSAJpODuWG0phQUaINnxYfgAkG6Y7771pWcQ/viewform",
+        esperanzada: "https://docs.google.com/forms/d/e/1FAIpQLSc5gm7dmLdB6mSSAJpODuWG0phQUaINnxYfgAkG6Y7771pWcQ/viewform",
+      });
     }
   });
 

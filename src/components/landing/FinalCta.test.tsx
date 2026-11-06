@@ -2,9 +2,22 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { FinalCta } from "./FinalCta";
 
+const openSpy = vi.fn();
+
 beforeEach(() => {
   vi.stubGlobal("IntersectionObserver", class { observe() {} disconnect() {} });
+  openSpy.mockReset();
+  vi.stubGlobal("open", openSpy);
 });
+
+function submit(email: string) {
+  fireEvent.change(screen.getByLabelText("Tu correo electrónico"), { target: { value: email } });
+  fireEvent.submit(screen.getByRole("button", { name: "Únete a la comunidad" }).closest("form")!);
+}
+
+const WA_ES =
+  "https://wa.me/447950745207?text=" +
+  encodeURIComponent("Hola NIDOU, quiero unirme a la comunidad. Mi correo es ana@example.com");
 
 describe("FinalCta", () => {
   it("renders the heading and the email form", () => {
@@ -23,11 +36,32 @@ describe("FinalCta", () => {
     expect(screen.queryByLabelText("Tu correo electrónico")).toBeNull();
   });
 
+  it("opens WhatsApp with the email in a prefilled message", () => {
+    render(<FinalCta lang="es" />);
+    submit("  ana@example.com ");
+    expect(openSpy).toHaveBeenCalledWith(WA_ES, "_blank", "noopener,noreferrer");
+  });
+
+  it("keeps replacement patterns in the email literal", () => {
+    render(<FinalCta lang="es" />);
+    submit("a$&b@x.com");
+    expect(openSpy.mock.calls[0][0]).toContain(encodeURIComponent("Mi correo es a$&b@x.com"));
+  });
+
+  it("offers a fallback WhatsApp link in case the new tab was blocked", () => {
+    render(<FinalCta lang="es" />);
+    submit("ana@example.com");
+    const link = screen.getByRole("link", { name: "¿No se abrió WhatsApp? Ábrelo aquí" });
+    expect(link).toHaveAttribute("href", WA_ES);
+    expect(link).toHaveAttribute("target", "_blank");
+  });
+
   it("ignores a blank submission", () => {
     render(<FinalCta lang="es" />);
     fireEvent.change(screen.getByLabelText("Tu correo electrónico"), { target: { value: "   " } });
     fireEvent.submit(screen.getByRole("button", { name: "Únete a la comunidad" }).closest("form")!);
     expect(screen.queryByText(/Gracias por tu interés/)).toBeNull();
+    expect(openSpy).not.toHaveBeenCalled();
   });
 
   it("asks the browser for email autofill", () => {

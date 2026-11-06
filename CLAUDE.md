@@ -49,6 +49,7 @@ Single-page, bilingual (Spanish/English) landing for NIDOU (motherhood community
 
 ## Known placeholders
 
-- `FinalCta` email form only flips local state and discards the email; there is no backend yet (the confirmation copy says so honestly).
-- The Google Form behind `joinHref` is a Spanish-language destination for both locales, and the `FinalCta` signup has no backend (the confirmation text is translated, but nothing is collected); only the surrounding UI copy is translated.
-- `href="#"` in the footer ("Sobre nosotras") has no destination yet. Instagram is real (`INSTAGRAM_HREF` in `src/data/site.ts`, opens in a new tab). The "Me sumo al siguiente" button in `FeelingCard` only links somewhere for the "Saturada" mood ("Cita con el artista") (a Google Form, via `joinHref`); the other moods still render a placeholder button with no destination.
+- `FinalCta` email form has no backend: on submit it opens WhatsApp (`wa.me` click-to-chat, built by `src/lib/whatsapp.ts`) to `+44 7950 745207` with a prefilled message containing the email; the visitor still has to tap send, and the confirmation shows a fallback link in case the new tab was blocked. Nothing is collected by the site.
+- The Google Forms (`COMMUNITY_FORM_HREF` in `src/data/site.ts`, and the "Cita con el artista" event form in `src/data/feelings.ts`) are Spanish-language destinations for both locales; only the surrounding UI copy is translated.
+- The Hero "Únete a la comunidad" CTA and the "Me sumo al siguiente" button of every mood without its own event form link to `COMMUNITY_FORM_HREF` (new tab); "Saturada" ("Cita con el artista") keeps its own form. The header/footer "Únete" links still jump to the `#unete` section.
+- `href="#"` in the footer ("Sobre nosotras") has no destination yet. Instagram is real (`INSTAGRAM_HREF` in `src/data/site.ts`, opens in a new tab).

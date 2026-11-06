@@ -98,11 +98,13 @@ describe("FeelingCard", () => {
     expect(link.getAttribute("rel")).toContain("noopener");
   });
 
-  it("keeps the placeholder button for moods without a join link", () => {
+  it("links moods without their own event form to the community form", () => {
     render(<FeelingCard content={feelings} />);
     fireEvent.click(screen.getByRole("button", { name: "Agotada" }));
-    expect(screen.queryByRole("link", { name: "Me sumo al siguiente" })).toBeNull();
-    expect(screen.getByRole("button", { name: "Me sumo al siguiente" })).toBeInTheDocument();
+    const link = screen.getByRole("link", { name: "Me sumo al siguiente" });
+    expect(link).toHaveAttribute("href", "https://docs.google.com/forms/d/e/1FAIpQLSc5gm7dmLdB6mSSAJpODuWG0phQUaINnxYfgAkG6Y7771pWcQ/viewform");
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(screen.queryByRole("button", { name: "Me sumo al siguiente" })).toBeNull();
   });
 
   it("styles warm and calm moods differently when selected", () => {

@@ -56,7 +56,7 @@ describe("English copy", () => {
     expect(getHowItWorks("en").subtitle).toBe("Five simple steps to support you at every stage.");
     expect(getHowItWorks("en").steps[1]).toBe("Find gatherings made for you.");
     expect(getFinalCta("en").heading).toBe("Your refuge can start here, too.");
-    expect(getFinalCta("en").thanks).toMatch(/^Thanks for your interest\. We're still getting/);
+    expect(getFinalCta("en").thanks).toMatch(/^Thanks for your interest\. We've opened WhatsApp/);
     expect(getValues("en").heading).toBe("Because looking after yourself is also looking after the people you love most.");
     expect(getGallery("en").heading).toBe("We don't just bring mothers together. We build bonds.");
     expect(getWellbeing("en").eyebrow).toBe("Tracking your wellbeing");

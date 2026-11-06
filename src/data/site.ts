@@ -38,6 +38,9 @@ const anchor = (label: string, id: string): Link => ({ label, href: `#${id}` });
 // Locale-neutral values are defined once; only text differs per locale.
 const EMAIL = "hola@nidou.com";
 export const INSTAGRAM_HREF = "https://www.instagram.com/nidou.family";
+// Community signup (Google Form, in Spanish; serves both locales).
+export const COMMUNITY_FORM_HREF =
+  "https://docs.google.com/forms/d/e/1FAIpQLSc5gm7dmLdB6mSSAJpODuWG0phQUaINnxYfgAkG6Y7771pWcQ/viewform";
 // Placeholder: there is no "about" page yet.
 const ABOUT_HREF = "#";
 

@@ -29,7 +29,10 @@ describe("Hero", () => {
 
   it("renders both CTAs", () => {
     render(<Hero lang="es" />);
-    expect(screen.getByRole("link", { name: "Únete a la comunidad" })).toHaveAttribute("href", "#unete");
+    const join = screen.getByRole("link", { name: "Únete a la comunidad" });
+    expect(join).toHaveAttribute("href", "https://docs.google.com/forms/d/e/1FAIpQLSc5gm7dmLdB6mSSAJpODuWG0phQUaINnxYfgAkG6Y7771pWcQ/viewform");
+    expect(join).toHaveAttribute("target", "_blank");
+    expect(join.getAttribute("rel")).toContain("noopener");
     expect(screen.getByRole("link", { name: "Descubre Nidou." })).toHaveAttribute("href", "#como-funciona");
   });
 
@@ -57,7 +60,7 @@ describe("Hero in English", () => {
     const h1 = screen.getByRole("heading", { level: 1 });
     expect(h1).toHaveTextContent("Motherhood transforms us.");
     expect(h1).toHaveTextContent("Community holds us.");
-    expect(screen.getByRole("link", { name: "Join the community" })).toHaveAttribute("href", "#unete");
+    expect(screen.getByRole("link", { name: "Join the community" })).toHaveAttribute("href", "https://docs.google.com/forms/d/e/1FAIpQLSc5gm7dmLdB6mSSAJpODuWG0phQUaINnxYfgAkG6Y7771pWcQ/viewform");
     expect(screen.getByRole("link", { name: "Discover Nidou." })).toHaveAttribute("href", "#como-funciona");
     expect(screen.getByRole("heading", { name: "How are you feeling today?" })).toBeInTheDocument();
   });
